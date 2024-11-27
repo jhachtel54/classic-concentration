@@ -22,37 +22,40 @@
 document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
-    var playArea = document.getElementById('playArea');//.classList.add('ready');
+    var playArea = document.getElementById('playArea');
+    var container = document.createElement("div");
+    container.classList.add("container", "p-0", "h-100");
+    playArea.appendChild(container);
 	for (var rowIndex = 0; rowIndex < 5; ++rowIndex)
 	{
 		var row = document.createElement("div");
-		row.classList.add("row");
-		row.classList.add("h-20");
-		playArea.appendChild(row);
+		row.classList.add("row", "h-20", "m-0");
+		container.appendChild(row);
 		for (var colIndex = 0; colIndex < 5; ++colIndex)
 		{
 			var col = document.createElement("div");
-			col.classList.add("col");
-			col.classList.add("puzzlePanel");
+			col.classList.add("col", "puzzlePanel");
 			row.appendChild(col);
 			
 			var inner = document.createElement("div");
 			inner.classList.add("puzzlePanelInner");
-			inner.classList.add("text-center");
 			col.appendChild(inner);
 			
 			var svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
-			svg.setAttributeNS('http://www.w3.org/2000/svg','viewBox','0 0 100 100');
-			svg.setAttributeNS('http://www.w3.org/2000/svg','preserveAspectRatio','none');
+			svg.setAttribute('viewBox','0 0 108 60');
+			svg.setAttribute('preserveAspectRatio','none');
 			svg.classList.add("puzzlePanelInnerSVG");
+			svg.innerHTML = "<path d=\"M20 12 L88 12 Q88 18 96 18 L96 42 Q88 42 88 48 L20 48 Q20 42 12 42 L12 18 Q20 18 20 12 z\" style=\"fill:#ff5555;\" />";
 			inner.appendChild(svg);
-			svg.innerHTML = "<path d=\"M0 0 l100 0 l0 100 l-100 0 z\" style=\"fill:black;\" />";
 			
-			// var svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
-			// svg.setAttributeNS('http://www.w3.org/2000/svg','viewBox','0 0 100 100');
-			// svg.classList.add("puzzlePanelInnerSVG");
-			// inner.appendChild(svg);
-			// svg.innerHTML = "<path d=\"M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z\"/>";//"<path=\"M0 0 L463 0 L463 214 L0 214 Z\" style=\"fill:black\">";
+            var textContainer = document.createElement("div");
+            textContainer.classList.add("d-flex", "align-items-center", "justify-content-center", "puzzlePanelInnerText");
+            inner.appendChild(textContainer);
+			
+            var number = document.createElement("p");
+            number.classList.add("mb-1");
+            number.innerHTML = "" + (rowIndex * 5 + colIndex + 1);
+            textContainer.appendChild(number);
 		}
 	}
 }

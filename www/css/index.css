@@ -39,16 +39,29 @@ body
     width:100%;
 }
 
-.h-15 {
+.col
+{
+    padding: 0px!important;
+}
+
+.h-15
+{
     height: 15%!important;
 }
 
-.h-20 {
+.h-20
+{
     height: 20%!important;
 }
 
-.h-85 {
+.h-85
+{
     height: 85%!important;
+}
+
+.scene
+{
+    padding: 0px;
 }
 
 .safeArea
@@ -60,14 +73,14 @@ body
 
 #playAreaContainer
 {
-	background-color: red;
-	padding: 2.7%;
+	background-color: #ff5555;
+	padding: 1% 2%;
 }
 
 .puzzlePanel
 {
 	background-color: #ff5555;
-	padding: 0.35%;
+	padding: 0.35%!important;
 }
 
 .puzzlePanelInner
@@ -88,4 +101,13 @@ body
 	left: 0px;
 	height: 100%;
 	width: 100%;
+}
+
+.puzzlePanelInnerText
+{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+    font-size: 36px;
+    color: #55ff55;
 }

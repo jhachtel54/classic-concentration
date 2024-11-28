@@ -26,17 +26,16 @@ body
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-    background-color:gray;
     /*background-image:linear-gradient(to bottom, #A7A7A7 0%, #E4E4E4 51%);*/
     font-family: system-ui, -apple-system, -apple-system-font, 'Segoe UI', 'Roboto', sans-serif;
     font-size:12px;
+    width:100vw;
     height:100vh;
     margin:0px;
     padding:0px;
     /* Padding to avoid the "unsafe" areas behind notches in the screen 
     padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
     text-transform:uppercase;*/
-    width:100%;
 }
 
 .col
@@ -59,28 +58,55 @@ body
     height: 85%!important;
 }
 
-.scene
+.background
 {
-    padding: 0px;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: gray;
 }
 
 .safeArea
 {
+    position: absolute;
+    left: 2.5vw;
 	height: 100vh;
 	width: 95vw;
 	background-color: black;
+}
+
+.scene
+{
+    padding: 0px;
 }
 
 #playAreaContainer
 {
 	background-color: #ff5555;
 	padding: 1% 2%;
+    margin: 0px;
+}
+
+#rebusPuzzle
+{
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
 .puzzlePanel
 {
 	background-color: #ff5555;
-	padding: 0.35%!important;
+    font-size: 36px;
+    color: #55ff55;
+}
+
+.puzzlePanelUnselected
+{
+	width: 100%;
+	height: 100%;
+	position: relative;
+	padding: 1.75%!important;
+    display: block;
 }
 
 .puzzlePanelInner
@@ -108,6 +134,15 @@ body
 	position: absolute;
 	height: 100%;
 	width: 100%;
-    font-size: 36px;
-    color: #55ff55;
+}
+
+.puzzlePanelSelected
+{
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	position: relative;
+	justify-content: center;
+	align-items: center;
+	display: none;
 }

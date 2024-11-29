@@ -16,22 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
-var testPuzzlePanels = [];
+ 
+ var puzzlePanels = [];
 
 // Wait for the deviceready event before using any of Cordova's device APIs.
 // See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
 document.addEventListener('deviceready', onDeviceReady, false);
-
-class Prize
-{
-    constructor(name, abbreviated, value)
-    {
-        this.name = name;
-        this.abbreviated = abbreviated;
-        this.value = value;
-    }
-}
 
 class PuzzlePanel
 {
@@ -79,7 +69,7 @@ class PuzzlePanel
         var prizeText = document.createElement("p");
         prizeText.id = "puzzlePanelPrizeText-" + id;
         prizeText.classList.add("mb-1");
-        prizeText.innerHTML = this.prize.abbreviated;
+        prizeText.innerHTML = this.prize.panelString;
         this.selectedDom.appendChild(prizeText);
     }
     
@@ -110,7 +100,7 @@ function onPlayAreaClicked(evt)
 {
     var id = evt.target.id;
     var number = id.split("-")[1];
-    testPuzzlePanels[number].Select();
+    puzzlePanels[number].Select();
 }
 
 function onDeviceReady()
@@ -123,7 +113,7 @@ function onDeviceReady()
     container.addEventListener("click", onPlayAreaClicked);
     playArea.appendChild(container);
     
-    var testPrize = new Prize("COOKWARE", "COOKWARE", 1200);
+    var prizePool = PrizeManager.GeneratePrizePool(11, 2, 2);
     
 	for (var rowIndex = 0; rowIndex < 5; ++rowIndex)
 	{
@@ -133,9 +123,9 @@ function onDeviceReady()
 		for (var colIndex = 0; colIndex < 5; ++colIndex)
 		{
             var id = rowIndex * 5 + colIndex;
-            var puzzlePanel = new PuzzlePanel(testPrize, id);
+            var puzzlePanel = new PuzzlePanel(prizePool[id], id);
             row.appendChild(puzzlePanel.GetDOM());
-            testPuzzlePanels.push(puzzlePanel);
+            puzzlePanels.push(puzzlePanel);
 		}
 	}
 }

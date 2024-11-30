@@ -236,19 +236,19 @@ function onDeviceReady()
     
     var prizePool = PrizeManager.GeneratePrizePool(11, 2, 2);
     
-	for (var rowIndex = 0; rowIndex < 5; ++rowIndex)
-	{
-		var row = document.createElement("div");
-		row.classList.add("row", "h-20", "m-0");
-		container.appendChild(row);
-		for (var colIndex = 0; colIndex < 5; ++colIndex)
-		{
+    for (var rowIndex = 0; rowIndex < 5; ++rowIndex)
+    {
+        var row = document.createElement("div");
+        row.classList.add("row", "h-20", "m-0");
+        container.appendChild(row);
+        for (var colIndex = 0; colIndex < 5; ++colIndex)
+        {
             var id = rowIndex * 5 + colIndex;
             var puzzlePanel = new PuzzlePanel(prizePool[id], id);
             row.appendChild(puzzlePanel.GetDOM());
             puzzlePanels.push(puzzlePanel);
-		}
-	}
+        }
+    }
     
     setTimeout(function() {
         puzzlePanels.forEach(panel => {

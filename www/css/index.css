@@ -70,9 +70,9 @@ body
 {
     position: absolute;
     left: 2.5vw;
-	height: 100vh;
-	width: 95vw;
-	background-color: black;
+    height: 100vh;
+    width: 95vw;
+    background-color: black;
 }
 
 .scene
@@ -82,8 +82,8 @@ body
 
 #playAreaContainer
 {
-	background-color: #ff5555;
-	padding: 1vh 2vw;
+    background-color: #ff5555;
+    padding: 1vh 2vw;
     margin: 0px;
 }
 
@@ -95,55 +95,55 @@ body
 
 .puzzlePanel
 {
-	background-color: #ff5555;
+    background-color: #ff5555;
     font-size: 2em;
     color: #55ff55;
 }
 
 .puzzlePanelUnselected
 {
-	width: 100%;
-	height: 100%;
-	position: relative;
-	padding: 1.75%!important;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding: 1.75%!important;
     display: block;
 }
 
 .puzzlePanelInner
 {
-	width: 100%;
-	height: 100%;
-	background-color: #55ff55;
-	position: relative;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #55ff55;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .puzzlePanelInnerSVG
 {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	height: 100%;
-	width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
 }
 
 .puzzlePanelInnerText
 {
-	position: absolute;
-	height: 100%;
-	width: 100%;
+    position: absolute;
+    height: 100%;
+    width: 100%;
 }
 
 .puzzlePanelSelected, .puzzlePanelSelectedWild
 {
-	width: 100%;
-	height: 100%;
-	position: relative;
-	justify-content: center;
-	align-items: center;
-	display: none;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    display: none;
 }
 
 .puzzlePanelSelected p
@@ -154,11 +154,11 @@ body
 
 .puzzlePanelSelected
 {
-	background-color: black;
+    background-color: black;
 }
 
 .puzzlePanelSelectedWild
 {
-	background-color: #ff5555;
+    background-color: #ff5555;
     color: #ff5555;
 }

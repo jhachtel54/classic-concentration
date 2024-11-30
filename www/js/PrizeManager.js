@@ -11,7 +11,9 @@ class Prize
 class PrizeManager
 {
 	static blankPrize = new Prize("", "", -1);
-	static wildPrize = new Prize("WILD", "WILD", 0);
+	static wildPrize = new Prize("WILD", "WiLD!", 0);
+	static doubleWildPrize = new Prize("DOUBLE WILD", "WiLD!", 1200);
+    
 	static potentialPrizes = [
 		new Prize("COOKWARE", "COOKWARE", 1200),
 		new Prize("BLENDER", "BLENDER", 1700),

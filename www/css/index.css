@@ -96,7 +96,7 @@ body
 .puzzlePanel
 {
 	background-color: #ff5555;
-    font-size: 2rem;
+    font-size: 2em;
     color: #55ff55;
 }
 
@@ -136,13 +136,29 @@ body
 	width: 100%;
 }
 
-.puzzlePanelSelected
+.puzzlePanelSelected, .puzzlePanelSelectedWild
 {
 	width: 100%;
 	height: 100%;
-	background-color: black;
 	position: relative;
 	justify-content: center;
 	align-items: center;
 	display: none;
+}
+
+.puzzlePanelSelected p
+{
+    text-align: center;
+    vertical-align: middle;
+}
+
+.puzzlePanelSelected
+{
+	background-color: black;
+}
+
+.puzzlePanelSelectedWild
+{
+	background-color: #ff5555;
+    color: #ff5555;
 }

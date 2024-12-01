@@ -230,7 +230,7 @@ function onDeviceReady()
     var container = document.createElement("div");
     container.id = "rebusPuzzle";
     container.classList.add("container", "p-0", "h-100");
-    container.style.backgroundImage = "url('img/Stage.png')";
+    container.style.backgroundImage = "url('" + PuzzleManager.SelectPuzzle() + "')";
     container.addEventListener("click", onPlayAreaClicked);
     playArea.appendChild(container);
     

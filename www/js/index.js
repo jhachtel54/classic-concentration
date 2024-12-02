@@ -226,13 +226,13 @@ function selectMatch(notWildPanel)
 
 function onDeviceReady()
 {
-    var playArea = document.getElementById('playArea');
-    var container = document.createElement("div");
-    container.id = "rebusPuzzle";
-    container.classList.add("container", "p-0", "h-100");
-    container.style.backgroundImage = "url('" + PuzzleManager.SelectPuzzle() + "')";
-    container.addEventListener("click", onPlayAreaClicked);
-    playArea.appendChild(container);
+    var playArea = document.getElementById("playArea");
+    // container.style.backgroundImage = "url('" +  + "')";
+    playArea.addEventListener("click", onPlayAreaClicked);
+    
+    var puzzleUrl = PuzzleManager.SelectPuzzle();
+    var puzzleNode = document.getElementById("rebusPuzzle");
+    puzzleNode.src = puzzleUrl;
     
     var prizePool = PrizeManager.GeneratePrizePool(11, 2, 2);
     
@@ -240,7 +240,7 @@ function onDeviceReady()
     {
         var row = document.createElement("div");
         row.classList.add("row", "h-20", "m-0");
-        container.appendChild(row);
+        playArea.appendChild(row);
         for (var colIndex = 0; colIndex < 5; ++colIndex)
         {
             var id = rowIndex * 5 + colIndex;

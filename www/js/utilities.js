@@ -39,12 +39,60 @@ function numberToWords(n)
 
 function replaceAllNumbersWithWords(input)
 {
-	var output = "" + input;
-	let pattern = new RegExp("\\D*(\\d+)\\D*", "g");
-	var matchIter = input.matchAll(pattern);
-	for (const match of matchIter)
-	{
-		output = output.replace(match[1], numberToWords(match[1]));
-	}
-	return output;
+    var output = "" + input;
+    let pattern = new RegExp("\\D*(\\d+)\\D*", "g");
+    var matchIter = input.matchAll(pattern);
+    for (const match of matchIter)
+    {
+        output = output.replace(match[1], numberToWords(match[1]));
+    }
+    return output;
+}
+
+function findForegroundPixelsInRegions(image, backgroundColor, numRows, numCols)
+{
+    // Create a temp canvas element
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d", { willReadFrequently: true });
+    canvas.width = image.width;
+    canvas.height = image.height;
+    context.drawImage(image, 0, 0);
+    var sectionWidth = image.width / numCols;
+    var sectionHeight = image.height / numRows;
+
+    var foregroundData = [];
+    var totalForegroundCount = 0;
+    for (var rowIndex = 0; rowIndex < numRows; ++rowIndex)
+    {
+        for (var colIndex = 0; colIndex < numCols; ++colIndex)
+        {
+            // Get image data
+            var left = colIndex * sectionWidth;
+            var bottom = rowIndex * sectionHeight;
+            const imageData = context.getImageData(left, bottom, sectionWidth, sectionHeight);
+            const data = imageData.data;
+
+            // Loop through each pixel
+            foregroundData.push(0)
+            var regionIndex = foregroundData.length - 1;
+            for (var pixel = 0; pixel < data.length; pixel += 4)
+            {
+                const r = data[pixel];
+                const g = data[pixel + 1];
+                const b = data[pixel + 2];
+                
+                if (r != backgroundColor[0] || g != backgroundColor[1] || b != backgroundColor[2])
+                {
+                    ++foregroundData[regionIndex];
+                    ++totalForegroundCount;
+                }
+            }
+        }
+    }
+        
+    // Convert counts to percentages
+    for (var index = 0; index < foregroundData.length; ++index)
+        foregroundData[index] = foregroundData[index] / totalForegroundCount;
+    
+    return foregroundData;
 }

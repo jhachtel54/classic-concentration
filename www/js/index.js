@@ -17,9 +17,12 @@
  * under the License.
  */
  
- var puzzlePanels = [];
- var previousSelected = [];
- var canSelect = false;
+var puzzlePanels = [];
+var previousSelected = [];
+var canSelect = false;
+var lastTimestamp = 0;
+var aiChoices = [];
+var ai = new AIPlayer(0.75, 5);
 
 // Wait for the deviceready event before using any of Cordova's device APIs.
 // See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
@@ -148,12 +151,19 @@ function onPlayAreaClicked(evt)
     
     var id = evt.target.id;
     var number = id.split("-")[1];
+    performSelect(number);
+}
+
+function performSelect(id)
+{
+    canSelect = false;
     
-    if (previousSelected.length > 0 && puzzlePanels[number].id == previousSelected[previousSelected.length - 1].id)
+    if (previousSelected.length > 0 && puzzlePanels[id].id == previousSelected[previousSelected.length - 1].id)
         return;
     
-    puzzlePanels[number].Select();
-    previousSelected.push(puzzlePanels[number]);
+    puzzlePanels[id].Select();
+    previousSelected.push(puzzlePanels[id]);
+    ai.AddPanelToMemory(puzzlePanels[id]);
     
     if (previousSelected.length == 2)
     {
@@ -161,7 +171,7 @@ function onPlayAreaClicked(evt)
         if (previousSelected[0].prize.value != PrizeManager.wildPrize.value &&
             previousSelected[1].prize.value != PrizeManager.wildPrize.value)
         {
-            canSelect = false;
+            // canSelect = false;
             if (previousSelected[0].prize.name == previousSelected[1].prize.name)
             {
                 setTimeout(clearSelected, 1000);
@@ -175,21 +185,33 @@ function onPlayAreaClicked(evt)
         // Only one is wild
         else if (previousSelected[0].prize.value != previousSelected[1].prize.value)
         {
-            canSelect = false;
+            // canSelect = false;
             setTimeout(function() {
                 var notWildPanel = previousSelected[0].prize.value != PrizeManager.wildPrize.value ? previousSelected[0] : previousSelected[1];
                 selectMatch(notWildPanel);
             }, 250);
+        }
+        
+        // Both are wild
+        else
+        {
+            enableSelecting();
         }
     }
     
     // This should only hit if two wilds were picked
     else if (previousSelected.length == 3)
     {
-        canSelect = false;
+        // canSelect = false;
         setTimeout(function() {
             selectMatch(previousSelected[2]);
         }, 250);
+    }
+    
+    // Delay selections maybe? At least for AI
+    else
+    {
+        enableSelecting();
     }
 }
 
@@ -197,9 +219,12 @@ function clearSelected()
 {
     previousSelected.forEach(panel => {
         panel.Clear();
+        ai.AddAmountSeen(PuzzleManager.GetWeight(panel.id));
+        ai.RemovePanelFromMemory(panel.id);
+        puzzlePanels[panel.id] = null;
     });
     previousSelected = [];
-    canSelect = true;
+    enableSelecting();
 }
 
 function resetSelected()
@@ -208,13 +233,16 @@ function resetSelected()
         panel.Reset();
     });
     previousSelected = [];
-    canSelect = true;
+    enableSelecting();
 }
 
 function selectMatch(notWildPanel)
 {
     for (var index = 0; index < puzzlePanels.length; ++index)
     {
+        if (puzzlePanels[index] == null)
+            continue;
+        
         if (puzzlePanels[index].prize.name == notWildPanel.prize.name && puzzlePanels[index].id != notWildPanel.id)
         {
             puzzlePanels[index].Select();
@@ -224,10 +252,16 @@ function selectMatch(notWildPanel)
     }
 }
 
+function enableSelecting()
+{
+    setTimeout(function() {
+        canSelect = true;
+    }, 250);
+}
+
 function onDeviceReady()
 {
     var playArea = document.getElementById("playArea");
-    // container.style.backgroundImage = "url('" +  + "')";
     playArea.addEventListener("click", onPlayAreaClicked);
     
     var puzzleUrl = PuzzleManager.SelectPuzzle();
@@ -253,8 +287,51 @@ function onDeviceReady()
     setTimeout(function() {
         puzzlePanels.forEach(panel => {
             if (panel.prize.value == PrizeManager.blankPrize.value)
+            {
                 panel.Clear();
+                ai.AddAmountSeen(PuzzleManager.GetWeight(panel.id));
+                puzzlePanels[panel.id] = null;
+            }
         });
-        canSelect = true;
+        enableSelecting();
+        aiChoices = ai.GetNextChoices(puzzlePanels);
+        window.requestAnimationFrame((timestamp) => update(timestamp));
     }, 1000);
+}
+
+function update(timestamp)
+{
+    // In milliseconds
+    var deltaTime = timestamp - lastTimestamp;
+    
+    // DO STUFF
+    if (canSelect)
+    {
+        if (aiChoices.length == 0)
+        {
+            if (ai.WantsToSolvePuzzle())
+            {
+                console.log("AI can solve!");
+                canSelect = false;
+                location.reload();
+            }
+            else
+            {
+                aiChoices = ai.GetNextChoices(puzzlePanels);
+            }
+        }
+        else
+        {
+            performSelect(aiChoices[0]);
+            aiChoices.shift();
+            if (aiChoices.length == 0)
+            {
+                console.log("AI done picking this round!");
+            }
+        }
+    }
+    
+    // Final stuff
+    lastTimestamp = timestamp;
+    window.requestAnimationFrame((timestamp) => update(timestamp));
 }

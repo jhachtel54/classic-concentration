@@ -1,8 +1,18 @@
-#playAreaContainer
+#stageAreaMain
+{
+    background-color: black;
+}
+
+#stage
+{
+    background-image: url("/img/Stage.png");
+    background-size: 100% 100%;
+}
+
+#playAreaMain
 {
     background-color: #ff5555;
     padding: 1vh 2vw;
-    margin: 0px;
 }
 
 #rebusPuzzle

@@ -61,8 +61,6 @@ class PuzzlePanel
             wildSVG.setAttribute('preserveAspectRatio', 'none');
             wildSVG.classList.add("puzzlePanelInnerSVG");
             
-            // wildSVG.innerHTML = "<path id=\"stripe\" d=\"M0 30 L108 0 L108 30 L 0 60 z\" style=\"fill:black;\" /><text x=\"0\" y=\"108\" fill=\"#ff5555\"><textPath href=\"stripe\">WiLD!</textPath></text>";
-            
             var wildStripe = document.createElementNS('http://www.w3.org/2000/svg','path');
             wildStripe.setAttribute("id", wildPathId);
             wildStripe.setAttribute("d", "M0 30 L108 0 L108 30 L 0 60 z");
@@ -81,7 +79,8 @@ class PuzzlePanel
             
             var wildTextPath = document.createElementNS('http://www.w3.org/2000/svg','textPath');
             wildTextPath.setAttribute("href", "#" + wildPathId);
-            wildTextPath.setAttribute("startOffset", "10%");
+            wildTextPath.setAttribute("startOffset", "50%");
+            wildTextPath.setAttribute("text-anchor", "middle");
             wildTextPath.setAttribute("textLength", "85%");
             wildTextPath.innerHTML = this.prize.panelString;
             wildText.appendChild(wildTextPath);

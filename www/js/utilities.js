@@ -49,6 +49,14 @@ function replaceAllNumbersWithWords(input)
     return output;
 }
 
+function setAttributes(element, attrs)
+{
+    for (var key in attrs)
+    {
+        element.setAttribute(key, attrs[key]);
+    }
+}
+
 function findForegroundPixelsInRegions(image, backgroundColor, numRows, numCols)
 {
     // Create a temp canvas element

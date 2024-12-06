@@ -43,9 +43,9 @@ body
     padding: 0px!important;
 }
 
-.h-15
+.h-5
 {
-    height: 15%!important;
+    height: 5%!important;
 }
 
 .h-20
@@ -53,9 +53,19 @@ body
     height: 20%!important;
 }
 
-.h-85
+.h-90
 {
-    height: 85%!important;
+    height: 90%!important;
+}
+
+.mainArea
+{
+    height: 80%!important;
+}
+
+.textArea
+{
+    height: 20%!important;
 }
 
 .background
@@ -78,4 +88,15 @@ body
 .scene
 {
     padding: 0px;
+}
+
+.sceneInnerContainer
+{
+    height: 100%;
+    padding: 0px;
+}
+
+.sceneInnerContainer div
+{
+    margin: 0px;
 }

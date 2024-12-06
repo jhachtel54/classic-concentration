@@ -7,6 +7,7 @@ class AIPlayer
         this.puzzleSeenPercent = 0;
         this.panelsRemembered = [];
         this.matchesRemembered = [];
+        this.choicesQueue = [];
     }
     
     static RememberedPanel = class
@@ -101,11 +102,14 @@ class AIPlayer
     // If the random panel is a match to a memorized panel, it will pick that second.
     // Otherwise it will pick another panel at random.
     // If both panels are wild, then it'll pick another panel at random.
-    GetNextChoices(panels)
+    QueueNextChoices(panels)
     {
         // Return a known match
         if (this.matchesRemembered.length > 0)
-            return this.matchesRemembered.splice(0, 1)[0];
+        {
+            this.choicesQueue = this.matchesRemembered.splice(0, 1)[0];
+            return;
+        }
         
         // Strip out memorizedPanels from the possible choices
         var randomPool = [];
@@ -140,30 +144,27 @@ class AIPlayer
             for (var index = 0; index < this.panelsRemembered.length; ++index)
             {
                 if (firstPanel.prize.name == this.panelsRemembered[index].prizeName)
-                    return [firstPanel.id, this.panelsRemembered[index].id];
+                {
+                    this.choicesQueue = [firstPanel.id, this.panelsRemembered[index].id];
+                    return;
+                }
             }
-        }
-        else
-        {
-            console.log("We picked a wild first");
         }
         
         // Randomize our second pick
         randomIndex = Math.floor(Math.random() * randomPool.length);
         var secondPanel = randomPool.splice(randomIndex, 1)[0];
         
-        if (secondPanel.prize.name == PrizeManager.wildPrize.name)
-        {
-            console.log("We picked a wild second");
-        }
-        
         // If we did not pick two wilds, return our choices now
         if (!isFirstPickWild || secondPanel.prize.name != PrizeManager.wildPrize.name)
-            return [firstPanel.id, secondPanel.id];
+        {
+            this.choicesQueue = [firstPanel.id, secondPanel.id];
+            return;
+        }
         
         // Since we did pick two wilds, pick a random third panel
         randomIndex = Math.floor(Math.random() * randomPool.length);
         var thirdPanel = randomPool.splice(randomIndex, 1)[0];
-        return [firstPanel.id, secondPanel.id, thirdPanel.id];
+        this.choicesQueue = [firstPanel.id, secondPanel.id, thirdPanel.id];
     }
 }

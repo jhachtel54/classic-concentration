@@ -35,29 +35,32 @@
         <meta name="color-scheme" content="light dark">
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/index.css">
-        <title>Hello World</title>
+        <link rel="stylesheet" href="css/scenes/PlayScene.css">
+        <title>Classic Concentration</title>
     </head>
     <body>
         <div class="background">
             <div class="safeArea">
-                <div id="playScene" class="scene container-fluid vh-100">
-                    <div id="playAreaContainer" class="row h-85">
-                        <div class="col">
-                            <div id="playArea" class="p-0 h-100 position-relative">
-                                <img id="rebusPuzzle" />
-                            </div>
-                        </div>
-                    </div>
-                    <div id="playText" class="row h-15"></div>
+                <div id="sceneContainer" class="scene container-fluid vh-100">
+                    <!-- <div id="playAreaContainer" class="row h-85"> -->
+                        <!-- <div class="col"> -->
+                            <!-- <div id="playArea" class="p-0 h-100 position-relative"> -->
+                                <!-- <img id="rebusPuzzle" /> -->
+                            <!-- </div> -->
+                        <!-- </div> -->
+                    <!-- </div> -->
+                    <!-- <div id="playText" class="row h-15"></div> -->
                 </div>
             </div>
         </div>
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="cordova.js"></script>
         <script src="js/utilities.js"></script>
-        <script src="js/PuzzleManager.js"></script>
-        <script src="js/PrizeManager.js"></script>
-        <script src="js/AIPlayer.js"></script>
+        <script src="js/classes/PuzzlePanel.js"></script>
+        <script src="js/classes/PuzzleManager.js"></script>
+        <script src="js/classes/PrizeManager.js"></script>
+        <script src="js/classes/AIPlayer.js"></script>
+        <script src="js/scenes/PlayScene.js"></script>
         <script src="js/index.js"></script>
     </body>
 </html>

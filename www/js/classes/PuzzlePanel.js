@@ -50,7 +50,7 @@ class PuzzlePanel
         {
             var prizeText = document.createElement("p");
             prizeText.id = "puzzlePanelPrizeText-" + id;
-            prizeText.classList.add("mb-1");
+            prizeText.classList.add("mb-1", "font-weight-bold");
             prizeText.innerHTML = this.prize.panelString;
             this.selectedDom.appendChild(prizeText);
         }

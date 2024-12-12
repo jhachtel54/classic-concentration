@@ -1,15 +1,22 @@
 class PlayScene
 {
-    constructor()
+    constructor(player1Name, player1SpriteSrc, player2Name, player2SpriteSrc, aiOptions)
     {
         this.puzzlePanels = [];
         this.selectionsThisRound = [];
         this.canSelect = false;
-        this.ai = new AIPlayer(0.8, 3);
         this.stageAreaContainer = null;
         this.playAreaContainer = null;
         this.scoreboardSVG = null;
         this.claimedPrizes = [[], []];
+        this.player1Name = player1Name;
+        this.player1SpriteSrc = player1SpriteSrc;
+        this.player2Name = player2Name;
+        this.player2SpriteSrc = player2SpriteSrc;
+        if (aiOptions !== undefined && aiOptions != null)
+            this.ai = new AIPlayer(aiOptions);
+        else
+            this.ai = null;
     }
     
     init(parentElement)
@@ -26,8 +33,8 @@ class PlayScene
                     "<div class='col container-fluid'>" +
                         "<div class='row h-5'></div>" +
                         "<div class='row h-90'>" +
-                            "<div class='col-1'></div>" +
-                            "<div id='stage' class='col-10 position-relative p-0'>" +
+                            "<div class='col-2'></div>" +
+                            "<div id='stage' class='col position-relative p-0'>" +
                                 "<svg id='scoreboardSVG' viewBox='0 0 680 400' preserveAspectRatio='none' class='position-absolute w-100 h-100'>" +
                                     "<rect x='140' y='72' width='400' height='225' fill='white' />" +
                                     "<rect x='155' y='82' width='175' height='28' rx='10' ry='10' fill='black' />" +
@@ -42,7 +49,7 @@ class PlayScene
                                     "</text>" +
                                 "</svg>" +
                             "</div>" +
-                            "<div class='col-1'></div>" +
+                            "<div class='col-2'></div>" +
                         "</div>" +
                     "<div class='row h-5'></div>" +
                     "</div>" +
@@ -101,6 +108,12 @@ class PlayScene
                     "<textPath id='player2Prize" + index + "Text' href='#player2Prize" + index + "TextPath' text-anchor='middle' startOffset='50%'></textPath>" +
                 "</text>";
         }
+        
+        this.setPlayerName(this.player1Name, 1);
+        this.setPlayerName(this.player2Name, 2);
+        this.scoreboardSVG.innerHTML += "" +
+            "<image id='player1Sprite' width='100' height='140' href='" + this.player1SpriteSrc + "' x='160' y='162' />" +
+            "<image id='player2Sprite' width='100' height='140' href='" + this.player2SpriteSrc + "' x='420' y='162' />";
     }
     
     setPlayerName(name, playerNumber)

@@ -8,4 +8,7 @@
     <content src="index.html" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+    <platform name="browser">
+        <hook type="before_prepare" src="hooks/appBrowserCopyFromPlatformToWWW.sh" />
+    </platform>
 </widget>

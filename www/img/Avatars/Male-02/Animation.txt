@@ -1,0 +1,7 @@
+Look: 9, 2, 14
+Cheer: 13, 2, 3, 2, 2, 3 - Idle -> 1 -> 2 -> 3 -> 2 -> 1
+
+male 2 idle: left on top
+male 2 look left: right on top
+male 2 look right: left on top
+looking right is the default, left is simply flipped

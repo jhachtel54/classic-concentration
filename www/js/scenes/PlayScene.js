@@ -28,92 +28,97 @@ class PlayScene
     buildDOM(parentElement)
     {
         parentElement.innerHTML = "" +
-            "<div id='stageAreaContainer' class='container-fluid sceneInnerContainer'>" +
-                "<div id='stageAreaMain' class='row mainArea'>" +
-                    "<div class='col container-fluid'>" +
-                        "<div class='row h-5'></div>" +
-                        "<div class='row h-90'>" +
-                            "<div class='col-2'></div>" +
-                            "<div id='stage' class='col position-relative p-0'>" +
-                                "<svg id='scoreboardSVG' viewBox='0 0 680 400' preserveAspectRatio='none' class='position-absolute w-100 h-100'>" +
-                                    "<rect x='140' y='72' width='400' height='225' fill='white' />" +
-                                    "<rect x='155' y='82' width='175' height='28' rx='10' ry='10' fill='black' />" +
-                                    "<path id='player1TextPath' d='M165 105 l155 0' />" +
-                                    "<text style='fill:#ff55ff; font-size:2em; font-weight:bold;'>" +
-                                        "<textPath id='player1Text' href='#player1TextPath' text-anchor='middle' startOffset='50%'></textPath>" +
-                                    "</text>" +
-                                    "<rect x='350' y='82' width='175' height='28' rx='10' ry='10' fill='black' />" +
-                                    "<path id='player2TextPath' d='M360 105 l155 0' />" +
-                                    "<text style='fill:#ff55ff; font-size:2em; font-weight:bold;'>" +
-                                        "<textPath id='player2Text' href='#player2TextPath' text-anchor='middle' startOffset='50%'></textPath>" +
-                                    "</text>" +
-                                "</svg>" +
-                            "</div>" +
-                            "<div class='col-2'></div>" +
-                        "</div>" +
-                    "<div class='row h-5'></div>" +
-                    "</div>" +
-                "</div>" +
-                "<div id='stageAreaText' class='row textArea'></div>" +
+            "<div class='h-100 w-100 position-relative' style='background-image:url(\"img/Stage.png\"); background-size:100% 100%;'>" +
+                "<div style='position:absolute; left:0px; top:4%; width:100%; height:92%; background-color:rgba(255,0,0,0.5);'></div>" +
             "</div>" +
-            "<div id='playAreaContainer' class='container-fluid sceneInnerContainer' style='display:none;'>" +
-                "<div id='playAreaMain' class='row mainArea'>" +
-                    "<div class='col'>" +
-                        "<div id='playArea' class='p-0 h-100 position-relative'>" +
-                            "<img id='rebusPuzzle' />" +
-                        "</div>" +
-                    "</div>" +
-                "</div>" +
-                "<div id='playAreaText' class='row textArea'></div>" +
-            "</div>";
+            "";
+        // parentElement.innerHTML = "" +
+            // "<div id='stageAreaContainer' class='container-fluid sceneInnerContainer'>" +
+                // "<div id='stageAreaMain' class='row mainArea'>" +
+                    // "<div class='col container-fluid'>" +
+                        // "<div class='row h-5'></div>" +
+                        // "<div class='row h-90'>" +
+                            // "<div class='col-2'></div>" +
+                            // "<div id='stage' class='col position-relative p-0'>" +
+                                // "<svg id='scoreboardSVG' viewBox='0 0 680 400' preserveAspectRatio='none' class='position-absolute w-100 h-100'>" +
+                                    // "<rect x='140' y='72' width='400' height='225' fill='white' />" +
+                                    // "<rect x='155' y='82' width='175' height='28' rx='10' ry='10' fill='black' />" +
+                                    // "<path id='player1TextPath' d='M165 105 l155 0' />" +
+                                    // "<text style='fill:#ff55ff; font-size:2em; font-weight:bold;'>" +
+                                        // "<textPath id='player1Text' href='#player1TextPath' text-anchor='middle' startOffset='50%'></textPath>" +
+                                    // "</text>" +
+                                    // "<rect x='350' y='82' width='175' height='28' rx='10' ry='10' fill='black' />" +
+                                    // "<path id='player2TextPath' d='M360 105 l155 0' />" +
+                                    // "<text style='fill:#ff55ff; font-size:2em; font-weight:bold;'>" +
+                                        // "<textPath id='player2Text' href='#player2TextPath' text-anchor='middle' startOffset='50%'></textPath>" +
+                                    // "</text>" +
+                                // "</svg>" +
+                            // "</div>" +
+                            // "<div class='col-2'></div>" +
+                        // "</div>" +
+                    // "<div class='row h-5'></div>" +
+                    // "</div>" +
+                // "</div>" +
+                // "<div id='stageAreaText' class='row textArea'></div>" +
+            // "</div>" +
+            // "<div id='playAreaContainer' class='container-fluid sceneInnerContainer' style='display:none;'>" +
+                // "<div id='playAreaMain' class='row mainArea'>" +
+                    // "<div class='col'>" +
+                        // "<div id='playArea' class='p-0 h-100 position-relative'>" +
+                            // "<img id='rebusPuzzle' />" +
+                        // "</div>" +
+                    // "</div>" +
+                // "</div>" +
+                // "<div id='playAreaText' class='row textArea'></div>" +
+            // "</div>";
         
-        var puzzleNode = document.getElementById("rebusPuzzle");
-        puzzleNode.src = PuzzleManager.SelectPuzzle();
+        // var puzzleNode = document.getElementById("rebusPuzzle");
+        // puzzleNode.src = PuzzleManager.SelectPuzzle();
         
-        var prizePool = PrizeManager.GeneratePrizePool(11, 2, 2);
-        var playArea = document.getElementById("playArea");
-        for (var rowIndex = 0; rowIndex < 5; ++rowIndex)
-        {
-            var row = document.createElement("div");
-            row.classList.add("row", "h-20", "m-0");
-            playArea.appendChild(row);
-            for (var colIndex = 0; colIndex < 5; ++colIndex)
-            {
-                var id = rowIndex * 5 + colIndex;
-                var puzzlePanel = new PuzzlePanel(prizePool[id], id);
-                row.appendChild(puzzlePanel.GetDOM());
-                this.puzzlePanels.push(puzzlePanel);
-            }
-        }
+        // var prizePool = PrizeManager.GeneratePrizePool(11, 2, 2);
+        // var playArea = document.getElementById("playArea");
+        // for (var rowIndex = 0; rowIndex < 5; ++rowIndex)
+        // {
+            // var row = document.createElement("div");
+            // row.classList.add("row", "h-20", "m-0");
+            // playArea.appendChild(row);
+            // for (var colIndex = 0; colIndex < 5; ++colIndex)
+            // {
+                // var id = rowIndex * 5 + colIndex;
+                // var puzzlePanel = new PuzzlePanel(prizePool[id], id);
+                // row.appendChild(puzzlePanel.GetDOM());
+                // this.puzzlePanels.push(puzzlePanel);
+            // }
+        // }
         
-        this.scoreboardSVG = document.getElementById("scoreboardSVG");
-        var player1Left = 156;
-        var player2Left = 341;
-        var y = 120;
-        var prizeHeight = 18;
-        var prizeWidth = 183;
-        var stroke = 2;
-        for (var index = 0; index < 8; ++index, y += prizeHeight)
-        {
-            var prizeBottom = y + index * stroke;
-            this.scoreboardSVG.innerHTML += "" +
-                "<rect id='player1Prize" + index + "' x=" + player1Left + " y=" + prizeBottom + " width=" + prizeWidth + " height=" + prizeHeight + " style='fill:#55ffff; stroke-width:" + stroke + "; stroke:black;' />" +
-                "<path id='player1Prize" + index + "TextPath' d='M" + (player1Left + stroke) + " " + (prizeBottom + prizeHeight - stroke) + " l" + (prizeWidth - stroke) + " 0' />" +
-                "<text style='fill:#ff55ff; font-size:1.5em; font-weight:bold;'>" +
-                    "<textPath id='player1Prize" + index + "Text' href='#player1Prize" + index + "TextPath' text-anchor='middle' startOffset='50%'></textPath>" +
-                "</text>" +
-                "<rect id='player2Prize" + index + "' x=" + player2Left + " y=" + prizeBottom + " width=" + prizeWidth + " height=" + prizeHeight + " style='fill:#55ffff; stroke-width:" + stroke + "; stroke:black;' />" +
-                "<path id='player2Prize" + index + "TextPath' d='M" + (player2Left + stroke) + " " + (prizeBottom + prizeHeight - stroke) + " l" + (prizeWidth - stroke) + " 0' />" +
-                "<text style='fill:#ff55ff; font-size:1.5em; font-weight:bold;'>" +
-                    "<textPath id='player2Prize" + index + "Text' href='#player2Prize" + index + "TextPath' text-anchor='middle' startOffset='50%'></textPath>" +
-                "</text>";
-        }
+        // this.scoreboardSVG = document.getElementById("scoreboardSVG");
+        // var player1Left = 156;
+        // var player2Left = 341;
+        // var y = 120;
+        // var prizeHeight = 18;
+        // var prizeWidth = 183;
+        // var stroke = 2;
+        // for (var index = 0; index < 8; ++index, y += prizeHeight)
+        // {
+            // var prizeBottom = y + index * stroke;
+            // this.scoreboardSVG.innerHTML += "" +
+                // "<rect id='player1Prize" + index + "' x=" + player1Left + " y=" + prizeBottom + " width=" + prizeWidth + " height=" + prizeHeight + " style='fill:#55ffff; stroke-width:" + stroke + "; stroke:black;' />" +
+                // "<path id='player1Prize" + index + "TextPath' d='M" + (player1Left + stroke) + " " + (prizeBottom + prizeHeight - stroke) + " l" + (prizeWidth - stroke) + " 0' />" +
+                // "<text style='fill:#ff55ff; font-size:1.5em; font-weight:bold;'>" +
+                    // "<textPath id='player1Prize" + index + "Text' href='#player1Prize" + index + "TextPath' text-anchor='middle' startOffset='50%'></textPath>" +
+                // "</text>" +
+                // "<rect id='player2Prize" + index + "' x=" + player2Left + " y=" + prizeBottom + " width=" + prizeWidth + " height=" + prizeHeight + " style='fill:#55ffff; stroke-width:" + stroke + "; stroke:black;' />" +
+                // "<path id='player2Prize" + index + "TextPath' d='M" + (player2Left + stroke) + " " + (prizeBottom + prizeHeight - stroke) + " l" + (prizeWidth - stroke) + " 0' />" +
+                // "<text style='fill:#ff55ff; font-size:1.5em; font-weight:bold;'>" +
+                    // "<textPath id='player2Prize" + index + "Text' href='#player2Prize" + index + "TextPath' text-anchor='middle' startOffset='50%'></textPath>" +
+                // "</text>";
+        // }
         
-        this.setPlayerName(this.player1Name, 1);
-        this.setPlayerName(this.player2Name, 2);
-        this.scoreboardSVG.innerHTML += "" +
-            "<image id='player1Sprite' width='100' height='140' href='" + this.player1SpriteSrc + "' x='160' y='162' />" +
-            "<image id='player2Sprite' width='100' height='140' href='" + this.player2SpriteSrc + "' x='420' y='162' />";
+        // this.setPlayerName(this.player1Name, 1);
+        // this.setPlayerName(this.player2Name, 2);
+        // this.scoreboardSVG.innerHTML += "" +
+            // "<image id='player1Sprite' width='100' height='140' href='" + this.player1SpriteSrc + "' x='160' y='162' />" +
+            // "<image id='player2Sprite' width='100' height='140' href='" + this.player2SpriteSrc + "' x='420' y='162' />";
     }
     
     setPlayerName(name, playerNumber)

@@ -56,7 +56,7 @@ class PlayScene
                 "</div>" +
                 "<div id='stageAreaText' class='row textArea'></div>" +
             "</div>" +
-            "<div id='playAreaContainer' class='container-fluid sceneInnerContainer' style='visibility:hidden;'>" +
+            "<div id='playAreaContainer' class='container-fluid sceneInnerContainer' style='display:none;'>" +
                 "<div id='playAreaMain' class='row mainArea'>" +
                     "<div class='col'>" +
                         "<div id='playArea' class='p-0 h-100 position-relative'>" +

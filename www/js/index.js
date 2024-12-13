@@ -27,6 +27,7 @@ var sceneContainer = null;
 
 function onDeviceReady()
 {
+    window.screen.orientation.lock("landscape");
     sceneContainer = document.getElementById("sceneContainer");
     changeScene(new PlayScene("James", "img/Avatars/Male-01.png", "Hailey", "img/Avatars/Female-02.png", {
         logicLevel: 0.8,

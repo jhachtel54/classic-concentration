@@ -51,7 +51,7 @@ class PuzzlePanel
             var prizeText = document.createElement("p");
             prizeText.id = "puzzlePanelPrizeText-" + id;
             prizeText.classList.add("mb-1", "font-weight-bold");
-            prizeText.innerHTML = this.prize.panelString;
+            prizeText.innerHTML = this.prize.name;
             this.selectedDom.appendChild(prizeText);
         }
         else
@@ -82,7 +82,7 @@ class PuzzlePanel
             wildTextPath.setAttribute("startOffset", "50%");
             wildTextPath.setAttribute("text-anchor", "middle");
             wildTextPath.setAttribute("textLength", "85%");
-            wildTextPath.innerHTML = this.prize.panelString;
+            wildTextPath.innerHTML = this.prize.name;
             wildText.appendChild(wildTextPath);
             wildSVG.appendChild(wildText);
             

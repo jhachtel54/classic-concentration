@@ -3,7 +3,7 @@
     background-color: black;
 }
 
-#stage
+#stageAreaContainer
 {
     background-image: url("/img/Stage.png");
     background-size: 100% 100%;
@@ -94,4 +94,18 @@
 {
     background-color: #ff5555;
     color: #ff5555;
+}
+
+.playerText
+{
+    font-size: 3em;
+    fill: #ff55ff;
+    font-weight:bold;
+}
+
+.scoreboardPrizeText
+{
+    font-size: 2em;
+    fill: #ff55ff;
+    font-weight:bold;
 }

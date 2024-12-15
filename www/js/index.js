@@ -34,7 +34,7 @@ function onDeviceReady()
         memoryLevel: 3
     }));
     
-    // console.log(findForegroundPixelsInRegions(document.getElementById("puzzle23"), [255, 255, 255], 5, 5));
+    // console.log(findForegroundPixelsInRegions(document.getElementById("puzzle13"), [255, 255, 255], 5, 5));
 }
 
 function changeScene(newScene)

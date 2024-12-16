@@ -34,6 +34,8 @@ function onDeviceReady()
         memoryLevel: 3
     }));
     
+    window.requestAnimationFrame((timestamp) => update(timestamp));
+    
     // console.log(findForegroundPixelsInRegions(document.getElementById("puzzle13"), [255, 255, 255], 5, 5));
 }
 

@@ -75,10 +75,21 @@ body
     background-color: gray;
 }
 
+@media (max-aspect-ratio: 2) {
+    #sceneContainer {
+        aspect-ratio: 16/10;
+    }
+}
+
+@media not (max-aspect-ratio: 2) {
+    #sceneContainer {
+        aspect-ratio: 19.5/9;
+    }
+}
+
 #sceneContainer
 {
     height: 100vh;
-    aspect-ratio: 19.5/9;
     background-color: black;
     padding: 0px;
 }

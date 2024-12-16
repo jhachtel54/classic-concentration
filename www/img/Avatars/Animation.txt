@@ -7,3 +7,24 @@ male 2 idle: left on top
 male 2 look left: right on top
 male 2 look right: left on top
 looking right is the default, left is simply flipped
+
+30 FPS
+
+0.4
+show prize
+0.2
+look 1
+0.2
+look 2
+0.2
+cheer 1
+0.133
+cheer 2
+0.2
+cheer 3
+0.2
+cheer 2
+0.133
+cheer 1
+0.325
+back to puzzle

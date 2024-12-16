@@ -5,7 +5,7 @@
 
 #stageAreaContainer
 {
-    background-image: url("/img/Stage.png");
+    background: url("/img/Stage.png") no-repeat center center;
     background-size: 100% 100%;
 }
 

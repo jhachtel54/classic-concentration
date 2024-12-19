@@ -35,14 +35,13 @@
         <meta name="color-scheme" content="light dark">
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/index.css">
+        <link rel="stylesheet" href="css/scenes/TitleScene.css">
         <link rel="stylesheet" href="css/scenes/PlayScene.css">
         <title>Classic Concentration</title>
     </head>
     <body>
         <!-- <img id="puzzle33" src="img/Puzzles/Test/033.png" /> -->
-        <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center background">
-            <div id="sceneContainer"></div>
-        </div>
+        
         <svg viewBox="0 0 1280 800" preserveAspectRatio="none" class="position-absolute w-100 h-100" style="left:0px; top:0px;">
             <g style="display:none;">
                 <clipPath id="clipRect"><rect x="0" y="0" width="160" height="228" /></clipPath>
@@ -96,6 +95,10 @@
                 <image id="female4Cheer3" href="img/Avatars/Female-04.png" x="-320" y="-228" width="480" height="456" clip-path="url(#clipRect)" />
             </g>
         </svg>
+        <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center background">
+            <div id="sceneContainer"></div>
+        </div>
+        
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="cordova.js"></script>
         <script src="js/utilities.js"></script>
@@ -104,6 +107,7 @@
         <script src="js/classes/PuzzleManager.js"></script>
         <script src="js/classes/PrizeManager.js"></script>
         <script src="js/classes/AIPlayer.js"></script>
+        <script src="js/scenes/TitleScene.js"></script>
         <script src="js/scenes/PlayScene.js"></script>
         <script src="js/index.js"></script>
     </body>

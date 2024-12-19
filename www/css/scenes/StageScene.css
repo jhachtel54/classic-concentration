@@ -1,0 +1,19 @@
+#stageAreaContainer
+{
+    background: url("/img/Stage.png") no-repeat center center;
+    background-size: 100% 100%;
+}
+
+.playerText
+{
+    font-size: 3em;
+    fill: #ff55ff;
+    font-weight:bold;
+}
+
+.scoreboardPrizeText
+{
+    font-size: 2em;
+    fill: #ff55ff;
+    font-weight:bold;
+}

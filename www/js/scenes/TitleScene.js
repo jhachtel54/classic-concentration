@@ -62,9 +62,9 @@ class TitleScene
     
     onClickedPlay()
     {
-        changeScene(new PlayScene("James", "img/Avatars/Male-01.png", "Hailey", "img/Avatars/Female-02.png", {
+        addScene(new StageScene(/*"James", "img/Avatars/Male-01.png", "Hailey", "img/Avatars/Female-02.png", {
             logicLevel: 0.8,
             memoryLevel: 3
-        }));
+        }*/), true);
     }
 }

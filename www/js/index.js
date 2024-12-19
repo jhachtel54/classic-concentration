@@ -29,22 +29,34 @@ function onDeviceReady()
 {
     window.screen.orientation.lock("landscape");
     sceneContainer = document.getElementById("sceneContainer");
-    changeScene(new TitleScene());
+    addScene(new TitleScene(), true);
+    // addScene(new StageScene(), true);
     
     window.requestAnimationFrame((timestamp) => update(timestamp));
     
     // console.log(findForegroundPixelsInRegions(document.getElementById("puzzle13"), [255, 255, 255], 5, 5));
 }
 
-function changeScene(newScene)
+function addScene(newScene, replaceAllScenes)
 {
-    if (currentScene != null)
+    if (replaceAllScenes && currentScene != null)
     {
         while (sceneContainer.firstChild)
             sceneContainer.removeChild(sceneContainer.lastChild);
     }
     newScene.init(sceneContainer);
     currentScene = newScene;
+}
+
+function switchScene(sceneName)
+{
+    var scene = document.getElementById(sceneName);
+    if (scene != null)
+    {
+        scene.style.display = "block";
+        currentScene.style.display = "none";
+        currentScene = scene;
+    }
 }
 
 function update(timestamp)

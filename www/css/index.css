@@ -45,14 +45,29 @@ body
     padding: 0px!important;
 }
 
+.h-2
+{
+    height: 2%!important;
+}
+
 .h-5
 {
     height: 5%!important;
 }
 
+.h-10
+{
+    height: 10%!important;
+}
+
 .h-20
 {
     height: 20%!important;
+}
+
+.h-65
+{
+    height: 65%!important;
 }
 
 .h-90

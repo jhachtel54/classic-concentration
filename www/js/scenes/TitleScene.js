@@ -10,8 +10,12 @@ class TitleScene
     init(parentElement)
     {
         this.buildDOM(parentElement);
+        
         var playButton = document.getElementById("playButton");
         playButton.addEventListener("click", this.onClickedPlay.bind(this));
+        
+        var optionsButton = document.getElementById("optionsButton");
+        optionsButton.addEventListener("click", this.onClickedOptions.bind(this));
     }
     
     buildDOM(parentElement)
@@ -32,7 +36,7 @@ class TitleScene
                         "<div class='row h-100 w-100'>" +
                             "<div id='playButton' class='col'><div><span>PLAY</span></div></div>" +
                             "<div id='scoreButton' class='col'><div><span>HIGH SCORES</span></div></div>" +
-                            "<div id='settingsButton' class='col'><div><span>SETTINGS</span></div></div>" +
+                            "<div id='optionsButton' class='col'><div><span>OPTIONS</span></div></div>" +
                         "</div>" +
                     "</div>" +
                 "</div>"
@@ -66,5 +70,10 @@ class TitleScene
             logicLevel: 0.8,
             memoryLevel: 3
         }*/), true);
+    }
+    
+    onClickedOptions()
+    {
+        addScene(new OptionsScene(), false);
     }
 }

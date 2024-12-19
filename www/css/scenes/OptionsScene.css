@@ -1,0 +1,70 @@
+#optionsBanner
+{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.optionsListItem, .optionsListItemDisabled, .optionsListButtons
+{
+    margin-bottom: 1%!important;
+    /* background-color: blue; */
+    font-weight: bold;
+    font-size: 3.5rem;
+    line-height: 3.5rem;
+}
+
+.optionsListItem, .optionsListItemDisabled
+{
+    height: 17%;
+}
+
+.optionsListButtons
+{
+    height: 20%;
+}
+
+.optionsListItem>.col, .optionsListItemDisabled>.col, .optionsListButtons>.col
+{
+    /* background-color: green; */
+    margin: auto;
+}
+
+.optionsListItem
+{
+    color: #55ffff;
+}
+
+.optionsListItemDisabled
+{
+    color: #555555;
+}
+
+.optionsListItemSelected, .optionsListItemUnselected, .optionsListItemDisabledSelected, .optionsListItemDisabledUnselected
+{
+    min-width: 20%;
+}
+
+.optionsListItemSelected
+{
+    color: black;
+    background-color: #55ffff;
+}
+
+.optionsListItemUnselected
+{
+    color: #55ffff;
+    background-color: black;
+}
+
+.optionsListItemDisabledSelected
+{
+    color: black;
+    background-color: #555555;
+}
+
+.optionsListItemDisabledUnselected
+{
+    color: #555555;
+    background-color: black;
+}

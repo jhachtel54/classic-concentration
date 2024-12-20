@@ -23,14 +23,15 @@ document.addEventListener('deviceready', onDeviceReady, false);
  
 var lastTimestamp = 0;
 var currentScene = null;
+var scenes = [];
 var sceneContainer = null;
 
 function onDeviceReady()
 {
     window.screen.orientation.lock("landscape");
     sceneContainer = document.getElementById("sceneContainer");
-    // addScene(new TitleScene(), true);
-    addScene(new OptionsScene(), true);
+    addScene(new TitleScene(), true);
+    // addScene(new OptionsScene(), true);
     
     window.requestAnimationFrame((timestamp) => update(timestamp));
     
@@ -39,22 +40,52 @@ function onDeviceReady()
 
 function addScene(newScene, replaceAllScenes)
 {
-    if (replaceAllScenes && currentScene != null)
+    if (currentScene != null)
     {
-        while (sceneContainer.firstChild)
-            sceneContainer.removeChild(sceneContainer.lastChild);
+        if (replaceAllScenes)
+        {
+            while (sceneContainer.firstChild)
+                sceneContainer.removeChild(sceneContainer.lastChild);
+            scenes = [];
+        }
+        else
+        {
+            currentScene.GetDOM().style.display = "none";
+        }
     }
     newScene.init(sceneContainer);
     currentScene = newScene;
+    scenes.push(newScene);
 }
 
-function switchScene(sceneName)
+function switchScene(sceneName, removeCurrentScene)
 {
-    var scene = document.getElementById(sceneName);
+    var scene = null;
+    for (var index = 0; index < scenes.length; ++index)
+    {
+        if (scenes[index].GetDOM().id == sceneName)
+        {
+            scene = scenes[index];
+            break;
+        }
+    }
     if (scene != null)
     {
-        scene.style.display = "block";
-        currentScene.style.display = "none";
+        if (removeCurrentScene)
+        {
+            for (var index = 0; index < scenes.length; ++index)
+            {
+                if (scenes[index].GetDOM().id == currentScene.GetDOM().id)
+                {
+                    scenes.splice(index, 1);
+                    break;
+                }
+            }
+            sceneContainer.removeChild(currentScene.GetDOM());
+        }
+        
+        scene.GetDOM().style.display = "block";
+        currentScene.GetDOM().style.display = "none";
         currentScene = scene;
     }
 }

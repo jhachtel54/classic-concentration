@@ -30,8 +30,8 @@ function onDeviceReady()
 {
     window.screen.orientation.lock("landscape");
     sceneContainer = document.getElementById("sceneContainer");
-    addScene(new TitleScene(), true);
-    // addScene(new OptionsScene(), true);
+    // addScene(new TitleScene(), true);
+    addScene(new StageScene(), true);
     
     window.requestAnimationFrame((timestamp) => update(timestamp));
     

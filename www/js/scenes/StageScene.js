@@ -29,7 +29,33 @@ class StageScene
                 "<g id='player1Sprite'></g>" +
                 "<g id='player2Sprite'></g>" +
             "</svg>" +
-            "<div id='stageAreaUI' class='uiArea'></div>";
+            "<div id='stageAreaUI' class='uiArea'>" +
+                "<div class='position-absolute' style='left:30%; top:0px; width:40%; height:100%; background-color:#ff5555;'>" +
+                    "<div class='position-absolute' style='left:5%; top:5%; width:90%; height:90%; background-color:#ffff55;'>" +
+                        "<div class='position-absolute container-fluid' style='left:2%; top:2%; width:96%; height:96%; background-color:#ff5555;'>" +
+                            "<div class='row h-25'>" +
+                                "<div class='col-2'></div>" +
+                                "<div class='col'>PLAYER 1</div>" +
+                                "<div class='col-2'></div>" +
+                            "</div>" +
+                            "<div class='row h-50'>" +
+                                "<div class='col-1 h-100'></div>" +
+                                "<div class='col-1 h-100'><</div>" +
+                                "<div class='col h-100'>" +
+                                    "<svg viewBox='0 0 160 228' class='w-100 h-100'>" +
+                                        "<use width='160' height='228' href='#male1Idle' />" +
+                                    "</svg>" +
+                                "</div>" +
+                                "<div class='col-1 h-100'>></div>" +
+                                "<div class='col-1 h-100'></div>" +
+                            "</div>" +
+                            "<div class='row h-25'>" +
+                            "</div>" +
+                        "</div>" +
+                    "</div>" +
+                "</div>" +
+            "</div>" +
+        "";
         
         var prizeBoard = document.getElementById("prizeBoard");
         var player1Left = 350;

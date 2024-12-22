@@ -2,6 +2,12 @@ class StageScene
 {
     constructor()
     {
+        this.avatars = ["male1", "male2", "male3", "male4", "female1", "female2", "female3", "female4"];
+        this.currentAvatar = 0;
+        this.playerCreationState = "1";
+        this.playerAvatars = [null, null];
+        this.claimedPrizes = [[], []];
+        this.playScene = null;
     }
     
     init(parentElement)
@@ -12,45 +18,56 @@ class StageScene
     
     buildDOM(parentElement)
     {
-        var stageAreaContainer = document.createElement("div");
-        stageAreaContainer.id = "stageAreaContainer";
-        stageAreaContainer.classList.add("sceneInnerContainer");
-        parentElement.appendChild(stageAreaContainer);
+        this.stageScene = document.createElement("div");
+        this.stageScene.id = "stageScene";
+        this.stageScene.classList.add("sceneInnerContainer");
+        parentElement.appendChild(this.stageScene);
         
-        stageAreaContainer.innerHTML = "" +
+        this.stageScene.innerHTML = "" +
             "<svg id='scoreboardSVG' viewBox='0 0 1280 800' preserveAspectRatio='none' class='position-absolute w-100 h-100'>" +
                 "<rect x='344' y='156' width='280' height='44' rx='16' ry='16' fill='black' />" +
-                "<path id='player1TextPath' d='M360 192 l248 0' />" +
-                "<text><textPath id='player1Text' class='playerText' href='#player1TextPath' text-anchor='middle' startOffset='50%'></textPath></text>" +
+                "<path id='player0TextPath' d='M360 192 l248 0' />" +
+                "<text><textPath id='player0Text' class='playerText' href='#player0TextPath' text-anchor='middle' startOffset='50%'></textPath></text>" +
                 "<rect x='656' y='156' width='280' height='44' rx='16' ry='16' fill='black' />" +
-                "<path id='player2TextPath' d='M672 192 l248 0' />" +
-                "<text><textPath id='player2Text' class='playerText' href='#player2TextPath' text-anchor='middle' startOffset='50%'></textPath></text>" +
+                "<path id='player1TextPath' d='M672 192 l248 0' />" +
+                "<text><textPath id='player1Text' class='playerText' href='#player1TextPath' text-anchor='middle' startOffset='50%'></textPath></text>" +
                 "<g id='prizeBoard'></g>" +
+                "<g id='player0Sprite'></g>" +
                 "<g id='player1Sprite'></g>" +
-                "<g id='player2Sprite'></g>" +
             "</svg>" +
             "<div id='stageAreaUI' class='uiArea'>" +
-                "<div class='position-absolute' style='left:30%; top:0px; width:40%; height:100%; background-color:#ff5555;'>" +
-                    "<div class='position-absolute' style='left:5%; top:5%; width:90%; height:90%; background-color:#ffff55;'>" +
-                        "<div class='position-absolute container-fluid' style='left:2%; top:2%; width:96%; height:96%; background-color:#ff5555;'>" +
-                            "<div class='row h-25'>" +
+                "<div id='characterSelectDialog' class='position-absolute'>" +
+                    "<div class='position-absolute'>" +
+                        "<div class='position-absolute container-fluid'>" +
+                            "<div class='row h-15'>" +
                                 "<div class='col-2'></div>" +
-                                "<div class='col'>PLAYER 1</div>" +
+                                "<div id='characterSelectTitle' class='col text-center m-auto'>PLAYER 1</div>" +
                                 "<div class='col-2'></div>" +
                             "</div>" +
                             "<div class='row h-50'>" +
-                                "<div class='col-1 h-100'></div>" +
-                                "<div class='col-1 h-100'><</div>" +
+                                "<div id='prevAvatarButton' class='col-2 text-end m-auto' style='font-size:8rem;'>🡄</div>" +
                                 "<div class='col h-100'>" +
-                                    "<svg viewBox='0 0 160 228' class='w-100 h-100'>" +
+                                    "<svg id='characterSelectAvatar' viewBox='0 0 160 228' class='w-100 h-100'>" +
                                         "<use width='160' height='228' href='#male1Idle' />" +
                                     "</svg>" +
                                 "</div>" +
-                                "<div class='col-1 h-100'>></div>" +
-                                "<div class='col-1 h-100'></div>" +
+                                "<div id='nextAvatarButton' class='col-2 text-begin m-auto' style='font-size:8rem;'>🡆</div>" +
                             "</div>" +
-                            "<div class='row h-25'>" +
+                            "<div class='row h-5'></div>" +
+                            "<div class='row h-10'>" +
+                                "<div class='col-1'></div>" +
+                                "<div class='col-4'>NAME</div>" +
+                                "<input id='playerNameTextBox' type='text' class='col' />" +
+                                "<div class='col-1'></div>" +
                             "</div>" +
+                            "<div class='row h-5'></div>" +
+                            "<div class='row h-10'>" +
+                                "<div class='col d-flex justify-content-between text-center' style='font-size:3.25rem; margin:0px 2%;'>" +
+                                    "<div id='characterSelectButton1' class='m-auto characterSelectButton'>ADD PLAYER 2</div>" +
+                                    "<div id='characterSelectButton2' class='m-auto characterSelectButton'>ADD AI PLAYER</div>" +
+                                "</div>" +
+                            "</div>" +
+                            "<div class='row h-5'></div>" +
                         "</div>" +
                     "</div>" +
                 "</div>" +
@@ -68,33 +85,42 @@ class StageScene
         {
             var prizeBottom = y + index * stroke;
             prizeBoard.innerHTML += "" +
-                "<rect id='player1Prize" + index + "' x=" + player1Left + " y=" + prizeBottom + " width=" + prizeWidth + " height=" + prizeHeight + " style='fill:#55ffff; stroke-width:" + stroke + "; stroke:black;' />" +
-                "<path id='player1Prize" + index + "TextPath' d='M" + (player1Left + stroke) + " " + (prizeBottom + prizeHeight - stroke) + " l" + (prizeWidth - stroke * 2) + " 0' />" +
-                "<text><textPath class='scoreboardPrizeText' id='player1Prize" + index + "Text' href='#player1Prize" + index + "TextPath' text-anchor='middle' startOffset='50%'></textPath></text>" +
-                "<rect id='player2Prize" + index + "' x=" + player2Left + " y=" + prizeBottom + " width=" + prizeWidth + " height=" + prizeHeight + " style='fill:#55ffff; stroke-width:" + stroke + "; stroke:black;' />" +
-                "<path id='player2Prize" + index + "TextPath' d='M" + (player2Left + stroke) + " " + (prizeBottom + prizeHeight - stroke) + " l" + (prizeWidth - stroke * 2) + " 0' />" +
-                "<text><textPath class='scoreboardPrizeText' id='player2Prize" + index + "Text' href='#player2Prize" + index + "TextPath' text-anchor='middle' startOffset='50%'></textPath></text>";
+                "<rect id='player0Prize" + index + "' x=" + player1Left + " y=" + prizeBottom + " width=" + prizeWidth + " height=" + prizeHeight + " style='fill:#55ffff; stroke-width:" + stroke + "; stroke:black;' />" +
+                "<path id='player0Prize" + index + "TextPath' d='M" + (player1Left + stroke) + " " + (prizeBottom + prizeHeight - stroke) + " l" + (prizeWidth - stroke * 2) + " 0' />" +
+                "<text><textPath class='scoreboardPrizeText' id='player0Prize" + index + "Text' href='#player0Prize" + index + "TextPath' text-anchor='middle' startOffset='50%'></textPath></text>" +
+                "<rect id='player1Prize" + index + "' x=" + player2Left + " y=" + prizeBottom + " width=" + prizeWidth + " height=" + prizeHeight + " style='fill:#55ffff; stroke-width:" + stroke + "; stroke:black;' />" +
+                "<path id='player1Prize" + index + "TextPath' d='M" + (player2Left + stroke) + " " + (prizeBottom + prizeHeight - stroke) + " l" + (prizeWidth - stroke * 2) + " 0' />" +
+                "<text><textPath class='scoreboardPrizeText' id='player1Prize" + index + "Text' href='#player1Prize" + index + "TextPath' text-anchor='middle' startOffset='50%'></textPath></text>";
         }
         
-        // this.setPlayerName(this.player1Name, 1);
-        // this.setPlayerName(this.player2Name, 2);
+        var prevAvatarButton = document.getElementById("prevAvatarButton");
+        prevAvatarButton.addEventListener("click", this.selectPrevAvatar.bind(this));
+        var nextAvatarButton = document.getElementById("nextAvatarButton");
+        nextAvatarButton.addEventListener("click", this.selectNextAvatar.bind(this));
+        var characterSelectButton1 = document.getElementById("characterSelectButton1");
+        characterSelectButton1.addEventListener("click", this.onClickedDialogButton.bind(this));
+        var characterSelectButton1 = document.getElementById("characterSelectButton2");
+        characterSelectButton2.addEventListener("click", this.onClickedDialogButton.bind(this));
         
-        // this.player1Avatar = new Avatar("male", 1, "JAMES");
-        // this.setPlayerSprite(this.player1Avatar.SetState("idle"), 1);
-        // setTimeout((function() {
-            // this.setPlayerSprite(this.player1Avatar.SetState("look"), 1);
-        // }).bind(this), 5000);
+        // DEBUG!!!
+        this.setPlayerName("JAMES", 0);
+        this.setPlayerName("HAILEY", 1);
+        this.playerAvatars[0] = new Avatar("male", 1, "JAMES");
+        this.playerAvatars[1] = new Avatar("female", 2, "HAILEY");
+        this.setPlayerSprite(this.playerAvatars[0].SetState("idle"), 1);
+        this.setPlayerSprite(this.playerAvatars[1].SetState("idle"), 2);
+        document.getElementById("characterSelectDialog").style.display = "none";
         
-        // this.addPrizeToPlayer(new Prize("ONE", 1200), 1);
-        // this.addPrizeToPlayer(new Prize("TWO", 1200), 1);
-        // this.addPrizeToPlayer(new Prize("THREE", 1200), 1);
-        // this.addPrizeToPlayer(new Prize("FOUR", 1200), 1);
-        // this.addPrizeToPlayer(new Prize("FIVE", 1200), 1);
-        // this.addPrizeToPlayer(new Prize("SIX", 1200), 1);
-        // this.addPrizeToPlayer(new Prize("SEVEN", 1200), 1);
-        // this.addPrizeToPlayer(new Prize("EIGHT", 1200), 1);
-        // this.addPrizeToPlayer(new Prize("NINE", 1200), 1);
-        // this.addPrizeToPlayer(new Prize("TEN", 1200), 1);
+        // TODO: START THE GAME (check the playerCreationState)
+        setTimeout(function() {
+            this.playScene = new PlayScene(this, "JAMES", "HAILEY");
+            addScene(this.playScene, false);
+        }.bind(this), 1000);
+    }
+    
+    GetDOM()
+    {
+        return this.stageScene;
     }
     
     setPlayerName(name, playerNumber)
@@ -104,12 +130,12 @@ class StageScene
         this.adjustTextLength(playerText, 248);
     }
     
-    addPrizeToPlayer(prize, playerNumber)
+    addPrizeToBoard(playerNumber, prize)
     {
-        this.claimedPrizes[playerNumber - 1].push(prize);
-        if (this.claimedPrizes[playerNumber - 1].length <= 8)
+        var opponentNumber = playerNumber == 0 ? 1 : 0;
+        if (this.claimedPrizes[playerNumber].length <= 8)
         {
-            var prizeDomName = "player" + playerNumber + "Prize" + (this.claimedPrizes[playerNumber - 1].length - 1);
+            var prizeDomName = "player" + playerNumber + "Prize" + (this.claimedPrizes[playerNumber].length - 1);
             var prizeRect = document.getElementById(prizeDomName);
             prizeRect.style.fill = "black";
             prizeRect.style.stroke = "white";
@@ -121,8 +147,7 @@ class StageScene
         {
             // If longer than 8, prizes actually wrap around to the other player's side.
             // For example, player 1's 9th prize, would go into the final slot of player 2.
-            var opponentNumber = playerNumber == 1 ? 2 : 1;
-            var opponentSlot = 7 - (this.claimedPrizes[playerNumber - 1].length - 9);
+            var opponentSlot = 7 - (this.claimedPrizes[playerNumber].length - 9);
             
             var prizeDomName = "player" + opponentNumber + "Prize" + opponentSlot;
             var prizeRect = document.getElementById(prizeDomName);
@@ -132,17 +157,27 @@ class StageScene
             prizeText.innerHTML = prize.name;
             this.adjustTextLength(prizeText, 280);
         }
+        
+        setTimeout(function() {
+            this.startAnimation("look", opponentNumber, function() {
+                this.startAnimation("cheer", playerNumber, this.returnToPlayArea.bind(this));
+            }.bind(this));
+        }.bind(this), 333);
     }
     
     setPlayerSprite(href, playerNumber)
     {
-        if (playerNumber == 1)
+        if (playerNumber == 0)
         {
-            document.getElementById("player1Sprite").innerHTML = "<use width='160' height='228' href='#" + href + "' transform='translate(352, 276)' />";
+            document.getElementById("characterSelectAvatar").innerHTML = "<use width='160' height='228' href='#" + href + "' />";
+        }
+        else if (playerNumber == 1)
+        {
+            document.getElementById("player0Sprite").innerHTML = "<use width='160' height='228' href='#" + href + "' transform='translate(352, 276)' />";
         }
         else
         {
-            document.getElementById("player2Sprite").innerHTML = "<use width='160' height='228' href='#" + href + "' transform='scale(-1, 1) translate(-928, 276)' />";
+            document.getElementById("player1Sprite").innerHTML = "<use width='160' height='228' href='#" + href + "' transform='scale(-1, 1) translate(-928, 276)' />";
         }
     }
     
@@ -159,10 +194,125 @@ class StageScene
             element.removeAttribute("lengthAdjust");
         }
     }
+    
+    startAnimation(animationName, playerNumber, onEnd)
+    {
+        this.setPlayerSprite(this.playerAvatars[playerNumber].SetState(animationName, onEnd), playerNumber + 1);
+    }
+    
+    selectPrevAvatar()
+    {
+        --this.currentAvatar;
+        if (this.currentAvatar < 0)
+            this.currentAvatar = this.avatars.length - 1;
+        this.setPlayerSprite(this.avatars[this.currentAvatar] + "Idle", 0);
+    }
+    
+    selectNextAvatar()
+    {
+        ++this.currentAvatar;
+        if (this.currentAvatar >= this.avatars.length)
+            this.currentAvatar = 0;
+        this.setPlayerSprite(this.avatars[this.currentAvatar] + "Idle", 0);
+    }
+    
+    resetCharacterSelectDialog()
+    {
+        playerNameTextBox.value = "";
+        this.currentAvatar = 0;
+        this.setPlayerSprite(this.avatars[this.currentAvatar] + "Idle", 0);
+    }
+    
+    onClickedDialogButton(evt)
+    {
+        var playerNameTextBox = document.getElementById("playerNameTextBox");
+        
+        var sprite = this.avatars[this.currentAvatar];
+        var gender = sprite.substr(0, sprite.length - 1);
+        var spriteNumber = sprite[sprite.length - 1];
+        
+        if (this.playerCreationState == "1")
+        {
+            if (playerNameTextBox.value.length == 0)
+                return;
+            
+            this.setPlayerName(playerNameTextBox.value.toUpperCase(), 0);
+            this.playerAvatars[0] = new Avatar(gender, spriteNumber, playerNameTextBox.value.toUpperCase());
+            this.setPlayerSprite(this.playerAvatars[0].SetState("idle"), 1);
+            
+            this.resetCharacterSelectDialog();
+            if (evt.target.id == "characterSelectButton1")
+            {
+                this.playerCreationState = "2";
+                document.getElementById("characterSelectTitle").innerHTML = "PLAYER 2";
+            }
+            else
+            {
+                this.playerCreationState = "3";
+                document.getElementById("characterSelectTitle").innerHTML = "AI PLAYER";
+            }
+            document.getElementById("characterSelectButton1").innerHTML = "BACK";
+            document.getElementById("characterSelectButton2").innerHTML = "START GAME";
+        }
+        else
+        {
+            if (evt.target.id == "characterSelectButton1")
+            {
+                this.resetCharacterSelectDialog();
+                this.playerCreationState = "1";
+                document.getElementById("characterSelectButton1").innerHTML = "ADD PLAYER 2";
+                document.getElementById("characterSelectButton2").innerHTML = "ADD AI PLAYER";
+                document.getElementById("characterSelectTitle").innerHTML = "PLAYER 1";
+            }
+            else if (playerNameTextBox.value.length > 0)
+            {
+                this.setPlayerName(playerNameTextBox.value.toUpperCase(), 1);
+                this.playerAvatars[1] = new Avatar(gender, spriteNumber, playerNameTextBox.value.toUpperCase());
+                this.setPlayerSprite(this.playerAvatars[1].SetState("idle"), 2);
+                document.getElementById("characterSelectDialog").style.display = "none";
+                
+                // TODO: START THE GAME (check the playerCreationState)
+                setTimeout(function() {
+                    var player1Name = document.getElementById("player0Text").innerHTML;
+                    var player2Name = playerNameTextBox.value.toUpperCase();
+                    this.playScene = new PlayScene(this, player1Name, player2Name);
+                    addScene(this.playScene, false);
+                }.bind(this), 1000);
+            }
+        }
+    }
+    
+    AwardPrizeToPlayer(playerNumber, prize)
+    {
+        this.claimedPrizes[playerNumber].push(prize);
+        setTimeout(function() {
+            this.addPrizeToBoard(playerNumber, prize);
+        }.bind(this), 800);
+    }
+    
+    returnToPlayArea()
+    {
+        switchScene(this.playScene.GetDOM().id, false);
+        this.setPlayerSprite(this.playerAvatars[0].SetState("idle"), 1);
+        this.setPlayerSprite(this.playerAvatars[1].SetState("idle"), 2);
+        setTimeout(function() {
+            this.playScene.ClearSelected();
+        }.bind(this), 1000);
+    }
 
     Update(deltaTime)
     {
-        // var p1Update = this.player1Avatar.UpdateAnimation(deltaTime);
+        // Only bother updating if we have our avatars initialized
+        if (this.playerAvatars[1] == null)
+            return;
+        
+        this.playerAvatars.forEach((avatar, playerNumber) => {
+            var update = avatar.UpdateAnimation(deltaTime);
+            if (update != null && update != Animation.END_EVENT_NAME)
+                this.setPlayerSprite(update, playerNumber + 1);
+        }, this);
+        
+        // var p1Update = this.playerAvatars[0].UpdateAnimation(deltaTime);
         // if (p1Update != null)
         // {
             // if (p1Update == Animation.END_EVENT_NAME)

@@ -46,7 +46,7 @@ class OptionsScene
         parentElement.appendChild(this.rootElement);
         
         var optionsListContainer = document.getElementById("optionsListContainer");
-        this.sfxOption = new OptionsRange(optionsListContainer, "SFX VOLUME", 0, 100, 100, true);
+        this.sfxOption = new OptionsRange(optionsListContainer, "SFX VOLUME", 0, 100, 0, true);
         this.vibrationOption = new OptionsRadio(optionsListContainer, "VIBRATION", ["ON", "OFF"], "OFF", true);
         this.aiOption = new OptionsRadio(optionsListContainer, "AI DIFFICULTY", ["EASY", "NORMAL", "HARD", "CUSTOM"], "EASY", false);
         this.logicOption = new OptionsRange(optionsListContainer, "LOGIC LEVEL", 0, 100, 10, true);

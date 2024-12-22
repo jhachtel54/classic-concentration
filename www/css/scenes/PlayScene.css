@@ -1,7 +1,12 @@
 #playAreaMain
 {
+    height: 80%!important;
+}
+
+#playArea
+{
     background-color: #ff5555;
-    padding: 1vh 2vw;
+    padding: 1vh 1vw;
 }
 
 #rebusPuzzle
@@ -16,7 +21,9 @@
 .puzzlePanel
 {
     background-color: #ff5555;
-    font-size: 2em;
+    font-size: 4rem;
+    line-height: 4rem;
+    font-weight: bold;
     color: #55ff55;
     height: 100%;
 }
@@ -83,4 +90,47 @@
 {
     background-color: #ff5555;
     color: #ff5555;
+}
+
+.wildTextPath
+{
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+#playAreaText
+{
+    height: 10%;
+    color: #ffff55;
+    width: 100%;
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+#playAreaSolveRow
+{
+    height: 10%;
+    width: 100%;
+}
+
+#solveButton
+{
+    background-color: #ff5555;
+    text-align: center;
+    margin: 0rem 6rem;
+    padding: 1rem!important;
+}
+
+#solveButton div
+{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    border: 0.5rem solid #ffff55;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #ffff55;
+    font-size: 2rem;
+    font-weight: bold;
 }

@@ -24,10 +24,10 @@ class PuzzlePanel
         svg.setAttribute('viewBox','0 0 108 60');
         svg.setAttribute('preserveAspectRatio','none');
         svg.classList.add("puzzlePanelInnerSVG");
-        if (!isWild)
+        if (!prize.debugColor)
             svg.innerHTML = "<path d=\"M20 12 L88 12 Q88 18 96 18 L96 42 Q88 42 88 48 L20 48 Q20 42 12 42 L12 18 Q20 18 20 12 z\" style=\"fill:#ff5555;\" />";
         else
-            svg.innerHTML = "<path d=\"M20 12 L88 12 Q88 18 96 18 L96 42 Q88 42 88 48 L20 48 Q20 42 12 42 L12 18 Q20 18 20 12 z\" style=\"fill:#5555ff;\" />";
+            svg.innerHTML = "<path d=\"M20 12 L88 12 Q88 18 96 18 L96 42 Q88 42 88 48 L20 48 Q20 42 12 42 L12 18 Q20 18 20 12 z\" style=\"fill:" + prize.debugColor + ";\" />";
         inner.appendChild(svg);
         
         var textContainer = document.createElement("div");
@@ -50,7 +50,6 @@ class PuzzlePanel
         {
             var prizeText = document.createElement("p");
             prizeText.id = "puzzlePanelPrizeText-" + id;
-            prizeText.classList.add("mb-1", "font-weight-bold");
             prizeText.innerHTML = this.prize.name;
             this.selectedDom.appendChild(prizeText);
         }
@@ -82,7 +81,8 @@ class PuzzlePanel
             wildTextPath.setAttribute("startOffset", "50%");
             wildTextPath.setAttribute("text-anchor", "middle");
             wildTextPath.setAttribute("textLength", "85%");
-            wildTextPath.innerHTML = this.prize.name;
+            wildTextPath.classList.add("wildTextPath");
+            wildTextPath.innerHTML = "WiLD!";
             wildText.appendChild(wildTextPath);
             wildSVG.appendChild(wildText);
             

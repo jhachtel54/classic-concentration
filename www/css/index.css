@@ -86,6 +86,11 @@ input[type=range]::-ms-track {
     height: 10%!important;
 }
 
+.h-15
+{
+    height: 15%!important;
+}
+
 .h-20
 {
     height: 20%!important;
@@ -99,16 +104,6 @@ input[type=range]::-ms-track {
 .h-90
 {
     height: 90%!important;
-}
-
-.mainArea
-{
-    height: 80%!important;
-}
-
-.textArea
-{
-    height: 20%!important;
 }
 
 .background

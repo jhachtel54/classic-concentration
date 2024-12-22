@@ -56,9 +56,10 @@ class Avatar
         this.cheerAnimation = new Animation("Cheer", [266, 400, 400, 266, 650], [1, 2, 3, 2, 1]);
         
         this.currentAnimation = this.idleAnimation;
+        this.onEnd = null;
     }
     
-    SetState(state)
+    SetState(state, onEnd)
     {
         switch (state.toUpperCase())
         {
@@ -75,6 +76,10 @@ class Avatar
                 return null;
         }
         this.currentAnimation.Reset();
+        if (onEnd != null)
+            this.onEnd = onEnd;
+        else
+            this.onEnd = null;
         return this.GetCurrentFrameName();
     }
     
@@ -83,6 +88,8 @@ class Avatar
         var newFrame = this.currentAnimation.Update(deltaTime);
         if (newFrame != null && newFrame != Animation.END_EVENT_NAME)
             return this.GetCurrentFrameName();
+        if (newFrame == Animation.END_EVENT_NAME)
+            this.onEnd();
         return newFrame;
     }
     

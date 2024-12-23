@@ -1,9 +1,9 @@
 class AIPlayer
 {
-    constructor(options)
+    constructor(logicLevel, memoryLevel)
     {
-        this.logicLevel = options.logicLevel;
-        this.memoryLevel = options.memoryLevel;
+        this.logicLevel = logicLevel;
+        this.memoryLevel = memoryLevel;
         this.puzzleSeenPercent = 0;
         this.panelsRemembered = [];
         this.matchesRemembered = [];

@@ -1,16 +1,15 @@
 class PlayScene
 {
-    constructor(stageScene, player1Name, player2Name, aiOptions)
+    constructor(stageScene, player1Name, player2Name, ai)
     {
         this.puzzlePanels = [];
         this.selectionsThisRound = [];
         this.canSelect = false;
         this.stageScene = stageScene;
         this.playerNames = [player1Name, player2Name];
-        if (aiOptions !== undefined && aiOptions != null)
-            this.ai = new AIPlayer(aiOptions);
-        else
-            this.ai = null;
+        this.ai = ai;
+        this.aiDelay = 750;
+        this.aiTimer = 0;
     }
     
     init(parentElement)
@@ -129,7 +128,10 @@ class PlayScene
         this.enableSelecting();
         
         if (this.activePlayer == 1 && this.ai)
-            this.ai.QueueNextChoices(this.puzzlePanels);
+        {
+            if (!this.ai.WantsToSolvePuzzle())
+                this.ai.QueueNextChoices(this.puzzlePanels);
+        }
     }
     
     startFinalRound()
@@ -305,7 +307,10 @@ class PlayScene
 
     enableSelecting()
     {
-        this.canSelect = true;
+        if (this.activePlayer == 1 && this.ai != null)
+            this.canSelect = false;
+        else
+            this.canSelect = true;
     }
     
     onSolveClicked()
@@ -324,6 +329,8 @@ class PlayScene
     
     ShowAnswer()
     {
+        this.stopUpdating = true;
+        
         this.solveButtons.style.visibility = "hidden";
         this.puzzlePanels.forEach(panel => {
             if (panel != null)
@@ -341,29 +348,50 @@ class PlayScene
 
     Update(deltaTime)
     {
-        //if (this.canSelect)
-        //{
-        //    if (aiChoices.length == 0)
-        //    {
-        //        if (this.ai.WantsToSolvePuzzle())
-        //        {
-        //            console.log("AI can solve!");
-        //            this.canSelect = false;
-        //        }
-        //        else
-        //        {
-        //            this.ai.QueueNextChoices(this.puzzlePanels);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        performSelect(aiChoices[0]);
-        //        aiChoices.shift();
-        //        if (aiChoices.length == 0)
-        //        {
-        //            console.log("AI done picking this round!");
-        //        }
-        //    }
-        //}
+        if (this.stopUpdating)
+            return;
+        
+        if (this.ai.choicesQueue.length > 0)
+        {
+            this.aiTimer += deltaTime;
+            if (this.aiTimer > this.aiDelay)
+            {
+                this.performSelect(this.ai.choicesQueue.shift());
+                this.aiTimer = 0;
+            }
+        }
+        else if (this.ai && this.activePlayer == 1 && this.ai.WantsToSolvePuzzle())
+        {
+            this.aiTimer += deltaTime;
+            if (this.aiTimer > this.aiDelay)
+            {
+                var aiTypingPrefix = this.playerNames[1] + ": ";
+                var answer = PuzzleManager.GetAnswer();
+                if (this.solveButtons.style.visibility == "visible")
+                {
+                    this.solveButtons.style.visibility = "hidden";
+                    this.playAreaText.innerHTML = aiTypingPrefix;
+                    this.aiDelay = (this.aiDelay * 4) / answer.length;
+                }
+                else if (this.playAreaText.innerHTML.length == answer.length + aiTypingPrefix.length)
+                {
+                    switchScene(this.stageScene.GetDOM().id, false);
+                    this.stageScene.PlayerGuess(this.activePlayer, answer);
+                }
+                else
+                {
+                    this.playAreaText.innerHTML += answer[this.playAreaText.innerHTML.length - aiTypingPrefix.length];
+                    // If the next character is a space, add that too
+                    if (answer[this.playAreaText.innerHTML.length - aiTypingPrefix.length] == " ")
+                        this.playAreaText.innerHTML += " ";
+                    // If we have finished typing, return the delay speed to the original value
+                    if (this.playAreaText.innerHTML.length == answer.length + aiTypingPrefix.length)
+                    {
+                        this.aiDelay = this.aiDelay * answer.length * 0.25;
+                    }
+                }
+                this.aiTimer = 0;
+            }
+        }
     }
 }

@@ -275,11 +275,16 @@ class StageScene
                 this.setPlayerSprite(this.playerAvatars[1].SetState("idle"), 2);
                 document.getElementById("characterSelectDialog").style.display = "none";
                 
-                // TODO: START THE GAME (check the playerCreationState)
                 setTimeout(function() {
                     var player1Name = document.getElementById("player0Text").innerHTML;
                     var player2Name = playerNameTextBox.value.toUpperCase();
-                    this.playScene = new PlayScene(this, player1Name, player2Name);
+                    var ai = null;
+                    if (this.playerCreationState == "3")
+                    {
+                        // TODO: LOAD AI SETTINGS
+                        ai = new AIPlayer(1, 1);
+                    }
+                    this.playScene = new PlayScene(this, player1Name, player2Name, ai);
                     addScene(this.playScene, false);
                 }.bind(this), 1000);
             }

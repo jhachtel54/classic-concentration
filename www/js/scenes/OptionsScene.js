@@ -78,13 +78,13 @@ class OptionsScene
         {
             case "EASY":
                 this.logicOption.SetEnabled(false);
-                this.logicOption.SetValue(10);
+                this.logicOption.SetValue(0);
                 this.memoryOption.SetEnabled(false);
                 this.memoryOption.SetValue(1);
                 break;
             case "NORMAL":
                 this.logicOption.SetEnabled(false);
-                this.logicOption.SetValue(25);
+                this.logicOption.SetValue(20);
                 this.memoryOption.SetEnabled(false);
                 this.memoryOption.SetValue(3);
                 break;

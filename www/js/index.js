@@ -29,9 +29,21 @@ var sceneContainer = null;
 function onDeviceReady()
 {
     window.screen.orientation.lock("landscape");
+    
+    if (window.localStorage.getItem("version") == null)
+    {
+        console.log("Making new save");
+        window.localStorage.setItem("version", "0.0");
+        window.localStorage.setItem("sfx", 0);
+        window.localStorage.setItem("vibration", false);
+        window.localStorage.setItem("aiLogic", 1);
+        window.localStorage.setItem("aiMemory", 3);
+        window.localStorage.setItem("parentalControls", true);
+    }
+    
     sceneContainer = document.getElementById("sceneContainer");
-    // addScene(new TitleScene(), true);
-    addScene(new StageScene(), true);
+    addScene(new TitleScene(), true);
+    // addScene(new StageScene(), true);
     
     window.requestAnimationFrame((timestamp) => update(timestamp));
     

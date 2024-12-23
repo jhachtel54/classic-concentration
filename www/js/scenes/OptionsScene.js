@@ -2,6 +2,17 @@ class OptionsScene
 {
     constructor()
     {
+        this.defaults = {
+            sfx: 0,
+            vibration: "OFF",
+            parental: "ON",
+            ai: "EASY",
+            difficulties: [
+                { name: "EASY", logic: 0, memory: 3 },
+                { name: "NORMAL", logic: 20, memory: 4 },
+                { name: "HARD", logic: 40, memory: 5 },
+            ]
+        }
     }
     
     init(parentElement)
@@ -46,12 +57,22 @@ class OptionsScene
         parentElement.appendChild(this.rootElement);
         
         var optionsListContainer = document.getElementById("optionsListContainer");
-        this.sfxOption = new OptionsRange(optionsListContainer, "SFX VOLUME", 0, 100, 0, true);
-        this.vibrationOption = new OptionsRadio(optionsListContainer, "VIBRATION", ["ON", "OFF"], "OFF", true);
-        this.aiOption = new OptionsRadio(optionsListContainer, "AI DIFFICULTY", ["EASY", "NORMAL", "HARD", "CUSTOM"], "EASY", false);
-        this.logicOption = new OptionsRange(optionsListContainer, "LOGIC LEVEL", 0, 100, 10, true);
-        this.memoryOption = new OptionsRange(optionsListContainer, "MEMORY LEVEL", 0, 12, 1, true);
-        this.parentalOption = new OptionsRadio(optionsListContainer, "PARENTAL CONTROLS", ["ON", "OFF"], "ON", true);
+        
+        var sfx = loadNumericalValue("sfx");
+        this.sfxOption = new OptionsRange(optionsListContainer, "SFX VOLUME", 0, 100, sfx, true);
+        
+        var vibration = loadBooleanValue("vibration") ? "ON" : "OFF";
+        this.vibrationOption = new OptionsRadio(optionsListContainer, "VIBRATION", ["ON", "OFF"], vibration, true);
+        
+        var logic = 100 - (loadNumericalValue("aiLogic") * 100);
+        var memory = parseInt(loadNumericalValue("aiMemory"));
+        var difficulty = this.determineAIOption(logic, memory);
+        this.aiOption = new OptionsRadio(optionsListContainer, "AI DIFFICULTY", ["EASY", "NORMAL", "HARD", "CUSTOM"], difficulty, false);
+        this.logicOption = new OptionsRange(optionsListContainer, "LOGIC LEVEL", 0, 100, logic, true);
+        this.memoryOption = new OptionsRange(optionsListContainer, "MEMORY LEVEL", 0, 12, memory, true);
+        
+        var parentalControls = loadBooleanValue("parentalControls") ? "ON" : "OFF";
+        this.parentalOption = new OptionsRadio(optionsListContainer, "PARENTAL CONTROLS", ["ON", "OFF"], parentalControls, false);
         
         this.aiOption.AddEventListener("change", this.UpdateAIRanges.bind(this));
         
@@ -74,27 +95,27 @@ class OptionsScene
     
     UpdateAIRanges(value)
     {
-        switch(value)
+        switch (value)
         {
             case "EASY":
                 this.logicOption.SetEnabled(false);
-                this.logicOption.SetValue(0);
+                this.logicOption.SetValue(this.defaults.difficulties[0].logic);
                 this.memoryOption.SetEnabled(false);
-                this.memoryOption.SetValue(1);
+                this.memoryOption.SetValue(this.defaults.difficulties[0].memory);
                 break;
             case "NORMAL":
                 this.logicOption.SetEnabled(false);
-                this.logicOption.SetValue(20);
+                this.logicOption.SetValue(this.defaults.difficulties[1].logic);
                 this.memoryOption.SetEnabled(false);
-                this.memoryOption.SetValue(3);
+                this.memoryOption.SetValue(this.defaults.difficulties[1].memory);
                 break;
             case "HARD":
                 this.logicOption.SetEnabled(false);
-                this.logicOption.SetValue(40);
+                this.logicOption.SetValue(this.defaults.difficulties[2].logic);
                 this.memoryOption.SetEnabled(false);
-                this.memoryOption.SetValue(5);
+                this.memoryOption.SetValue(this.defaults.difficulties[2].memory);
                 break;
-            case "CUSTOM":
+            default:
                 this.logicOption.SetEnabled(true);
                 this.memoryOption.SetEnabled(true);
                 break;
@@ -103,7 +124,11 @@ class OptionsScene
     
     SaveAndExit()
     {
-        // TODO: SAVE!!!!!
+        window.localStorage.setItem("sfx", this.sfxOption.GetValue());
+        window.localStorage.setItem("vibration", this.vibrationOption.GetValue() == "ON");
+        window.localStorage.setItem("aiLogic", (100 - this.logicOption.GetValue()) * 0.01);
+        window.localStorage.setItem("aiMemory", this.memoryOption.GetValue());
+        window.localStorage.setItem("parentalControls", "" + this.parentalOption.GetValue() == "ON");
         switchScene("titleScene", true);
     }
     
@@ -114,10 +139,22 @@ class OptionsScene
     
     RestoreDefaults()
     {
-        this.sfxOption.SetValue(100);
-        this.vibrationOption.SetValue("OFF");
-        this.aiOption.SetValue("EASY");
-        this.parentalOption.SetValue("ON");
+        this.sfxOption.SetValue(this.defaults.sfx);
+        this.vibrationOption.SetValue(this.defaults.vibration);
+        this.aiOption.SetValue(this.defaults.ai);
+        this.parentalOption.SetValue(this.defaults.parental);
+    }
+    
+    determineAIOption(logic, memory)
+    {
+        for (var index = 0; index < this.defaults.difficulties.length; ++index)
+        {
+            var difficulty = this.defaults.difficulties[index];
+            if (difficulty.logic == logic && difficulty.memory == memory)
+                return difficulty.name;
+        }
+        
+        return "CUSTOM";
     }
 }
 

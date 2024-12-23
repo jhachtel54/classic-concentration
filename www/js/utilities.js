@@ -104,3 +104,18 @@ function findForegroundPixelsInRegions(image, backgroundColor, numRows, numCols)
     
     return foregroundData;
 }
+
+function loadNumericalValue(option)
+{
+    return parseFloat(window.localStorage.getItem(option));
+}
+
+function loadStringValue(option)
+{
+    return window.localStorage.getItem(option);
+}
+
+function loadBooleanValue(option)
+{
+    return window.localStorage.getItem(option) == "true";
+}

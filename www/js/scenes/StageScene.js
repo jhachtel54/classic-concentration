@@ -114,7 +114,7 @@ class StageScene
         
         // // TODO: START THE GAME (check the playerCreationState)
         // setTimeout(function() {
-            // this.playScene = new PlayScene(this, "JAMES", "HAILEY");
+            // this.playScene = new PlayScene(this, "JAMES", "HAILEY", new AIPlayer(.10, 12));
             // addScene(this.playScene, false);
         // }.bind(this), 1000);
     }
@@ -278,12 +278,11 @@ class StageScene
                 setTimeout(function() {
                     var player1Name = document.getElementById("player0Text").innerHTML;
                     var player2Name = playerNameTextBox.value.toUpperCase();
+                    
                     var ai = null;
                     if (this.playerCreationState == "3")
-                    {
-                        // TODO: LOAD AI SETTINGS
-                        ai = new AIPlayer(1, 1);
-                    }
+                        ai = new AIPlayer(loadNumericalValue("aiLogic"), loadNumericalValue("aiMemory"));
+                    
                     this.playScene = new PlayScene(this, player1Name, player2Name, ai);
                     addScene(this.playScene, false);
                 }.bind(this), 1000);

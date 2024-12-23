@@ -108,7 +108,7 @@ input[type=range]::-ms-track {
 
 .background
 {
-    background-color: gray;
+    background: url("/img/Letterbox-Background.png") repeat left top;
 }
 
 @media (max-aspect-ratio: 2) {

@@ -71,6 +71,7 @@ class StageScene
                         "</div>" +
                     "</div>" +
                 "</div>" +
+                "<div id='resultText' class='text-center'></div>" +
             "</div>" +
         "";
         
@@ -103,19 +104,19 @@ class StageScene
         characterSelectButton2.addEventListener("click", this.onClickedDialogButton.bind(this));
         
         // DEBUG!!!
-        this.setPlayerName("JAMES", 0);
-        this.setPlayerName("HAILEY", 1);
-        this.playerAvatars[0] = new Avatar("male", 1, "JAMES");
-        this.playerAvatars[1] = new Avatar("female", 2, "HAILEY");
-        this.setPlayerSprite(this.playerAvatars[0].SetState("idle"), 1);
-        this.setPlayerSprite(this.playerAvatars[1].SetState("idle"), 2);
-        document.getElementById("characterSelectDialog").style.display = "none";
+        // this.setPlayerName("JAMES", 0);
+        // this.setPlayerName("HAILEY", 1);
+        // this.playerAvatars[0] = new Avatar("male", 1, "JAMES");
+        // this.playerAvatars[1] = new Avatar("female", 2, "HAILEY");
+        // this.setPlayerSprite(this.playerAvatars[0].SetState("idle"), 1);
+        // this.setPlayerSprite(this.playerAvatars[1].SetState("idle"), 2);
+        // document.getElementById("characterSelectDialog").style.display = "none";
         
-        // TODO: START THE GAME (check the playerCreationState)
-        setTimeout(function() {
-            this.playScene = new PlayScene(this, "JAMES", "HAILEY");
-            addScene(this.playScene, false);
-        }.bind(this), 1000);
+        // // TODO: START THE GAME (check the playerCreationState)
+        // setTimeout(function() {
+            // this.playScene = new PlayScene(this, "JAMES", "HAILEY");
+            // addScene(this.playScene, false);
+        // }.bind(this), 1000);
     }
     
     GetDOM()
@@ -295,9 +296,33 @@ class StageScene
         switchScene(this.playScene.GetDOM().id, false);
         this.setPlayerSprite(this.playerAvatars[0].SetState("idle"), 1);
         this.setPlayerSprite(this.playerAvatars[1].SetState("idle"), 2);
+        document.getElementById("resultText").innerHTML = "";
         setTimeout(function() {
             this.playScene.ClearSelected();
         }.bind(this), 1000);
+    }
+    
+    PlayerGuess(playerNumber, guess)
+    {
+        var opponentNumber = playerNumber == 0 ? 1 : 0;
+        if (PuzzleManager.CheckAnswer(guess))
+        {
+            setTimeout(function() {
+                this.startAnimation("look", opponentNumber, function() {
+                    document.getElementById("resultText").innerHTML = "<< CORRECT ANSWER >>";
+                    this.startAnimation("cheer", playerNumber, this.returnToPlayArea.bind(this));
+                }.bind(this));
+            }.bind(this), 1000);
+        }
+        else
+        {
+            setTimeout(function() {
+                this.startAnimation("look", opponentNumber, function() {
+                    document.getElementById("resultText").innerHTML = "<< WRONG ANSWER >>";
+                    this.startAnimation("wrong", playerNumber, this.returnToPlayArea.bind(this));
+                }.bind(this));
+            }.bind(this), 1000);
+        }
     }
 
     Update(deltaTime)
@@ -311,14 +336,5 @@ class StageScene
             if (update != null && update != Animation.END_EVENT_NAME)
                 this.setPlayerSprite(update, playerNumber + 1);
         }, this);
-        
-        // var p1Update = this.playerAvatars[0].UpdateAnimation(deltaTime);
-        // if (p1Update != null)
-        // {
-            // if (p1Update == Animation.END_EVENT_NAME)
-                // console.log("Animation finished");
-            // else
-                // this.setPlayerSprite(p1Update, 1);
-        // }
     }
 }

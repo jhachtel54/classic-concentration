@@ -28,3 +28,23 @@ cheer 2
 cheer 1
 0.325
 back to puzzle
+
+Wrong:
+4 -> 3 -> 4 -> 4 -> 11
+
+Male-1:
+Cheer 1 -> Cheer 3 -> Wrong -> Look 1 -> -> Wrong
+Female-1:
+Cheer 1 -> Wrong 1 -> Wrong 2 -> Wrong 3 -> Wrong 2
+Male-2:
+Cheer 1 -> Look 1 -> Cheer 1 -> Wrong -> Cheer 1
+Female-2:
+Cheer 1 -> Wrong 1 -> Wrong 2 -> Wrong 3 -> Wrong 2
+Male-3:
+Cheer 1 -> Wrong 1 -> Wrong 2 -> Wrong 3 -> Wrong 2
+Female-3:
+Cheer 1 -> Wrong 1 -> Wrong 2 -> Wrong 1 -> Wrong 2
+Male-4:
+Cheer 1 -> Wrong 1 -> Wrong 2 -> Cheer 1 -> Wrong 2
+Female-4:
+Cheer 1 -> Wrong 1 -> Wrong 2 -> Wrong 3 -> Wrong 2

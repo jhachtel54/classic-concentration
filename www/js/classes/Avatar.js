@@ -54,6 +54,7 @@ class Avatar
         this.idleAnimation = new Animation("Idle", [], [""]);
         this.lookAnimation = new Animation("Look", [400, 400], [1, 2]);
         this.cheerAnimation = new Animation("Cheer", [266, 400, 400, 266, 650], [1, 2, 3, 2, 1]);
+        this.wrongAnimation = new Animation("Wrong", [266, 200, 266, 266, 733], [1, 2, 3, 4, 3]);
         
         this.currentAnimation = this.idleAnimation;
         this.onEnd = null;
@@ -71,6 +72,9 @@ class Avatar
                 break;
             case "CHEER":
                 this.currentAnimation = this.cheerAnimation;
+                break;
+            case "WRONG":
+                this.currentAnimation = this.wrongAnimation;
                 break;
             default:
                 return null;

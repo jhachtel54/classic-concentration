@@ -144,16 +144,6 @@ class PlayScene
             if (this.selectionsThisRound[0].prize.value != PrizeManager.wildPrize.value &&
                 this.selectionsThisRound[1].prize.value != PrizeManager.wildPrize.value)
             {
-                // // this.canSelect = false;
-                // if (this.selectionsThisRound[0].prize.name == this.selectionsThisRound[1].prize.name)
-                // {
-                    // setTimeout(this.ClearSelected.bind(this), 1000);
-                // }
-                // else
-                // {
-                    // setTimeout(this.resetSelected.bind(this), 1000);
-                // }
-                
                 this.playAreaText.innerHTML = "";
                 if (this.selectionsThisRound[0].prize.name == this.selectionsThisRound[1].prize.name)
                 {
@@ -263,7 +253,8 @@ class PlayScene
     {
         if (results.buttonIndex == 1)
         {
-            alert(PuzzleManager.CheckAnswer(results.input1.toUpperCase()));
+            switchScene(this.stageScene.GetDOM().id, false);
+            this.stageScene.PlayerGuess(this.activePlayer, results.input1.toUpperCase());
         }
     }
 

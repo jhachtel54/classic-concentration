@@ -32,11 +32,10 @@ function onDeviceReady()
     sceneContainer = document.getElementById("sceneContainer");
     addScene(new TitleScene(), true);
     // addScene(new StageScene(), true);
-    // addScene(new PlayScene(null, "JAMES", "HAILEY"), true);
     
     window.requestAnimationFrame((timestamp) => update(timestamp));
     
-    // console.log(findForegroundPixelsInRegions(document.getElementById("puzzle13"), [255, 255, 255], 5, 5));
+    // console.log(findForegroundPixelsInRegions(document.getElementById("puzzle42"), [255, 255, 255], 5, 5));
 }
 
 function addScene(newScene, replaceAllScenes)

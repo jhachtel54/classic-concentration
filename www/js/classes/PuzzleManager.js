@@ -76,4 +76,9 @@ class PuzzleManager
     {
         return this.selectedPuzzle.weights[index];
     }
+    
+    static GetAnswer()
+    {
+        return this.selectedPuzzle.answers[0];
+    }
 };

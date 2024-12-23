@@ -40,7 +40,11 @@ class PlayScene
                     "<div id='playAreaText' class='row'><div class='col text-center'>CONTESTANTS GET READY TO PLAY</div></div>" +
                     "<div id='playAreaSolveRow' class='row'>" +
                         "<div class='col'></div>" +
-                        "<div id='solveButton' class='col-2' style='visibility:hidden;'><div><span>SOLVE</span></div></div>" +
+                        "<div id='solveButtons' class='col-2 d-flex justify-content-between' style='visibility:hidden;'>" +
+                            "<div id='solveButton'><div><span>SOLVE</span></div></div>" +
+                            "<div id='yesSolveButton' style='display:none;'><div><span>YES</span></div></div>" +
+                            "<div id='noSolveButton' style='display:none;'><div><span>NO</span></div></div>" +
+                        "</div>" +
                         "<div class='col'></div>" +
                     "</div>" +
                 "</div>" +
@@ -49,6 +53,7 @@ class PlayScene
         parentElement.appendChild(this.playScene);
         
         this.playAreaText = document.getElementById("playAreaText").firstChild;
+        this.solveButtons = document.getElementById("solveButtons");
         this.solveButton = document.getElementById("solveButton");
         this.solveButton.addEventListener("click", this.onSolveClicked.bind(this));
         
@@ -104,12 +109,58 @@ class PlayScene
     changeActivePlayer(playerNumber)
     {
         this.activePlayer = playerNumber;
-        this.playAreaText.innerHTML = this.playerNames[playerNumber] + " SELECT ANY TWO PANELS OR SOLVE THE PUZZLE";
-        this.solveButton.style.visibility = "visible";
+        this.solveButtons.style.visibility = "visible";
+        
+        var remainingPanels = this.puzzlePanels.filter(panel => { return panel != null; });
+        if (remainingPanels.length > 3)
+        {
+            this.startNextRound();
+        }
+        else
+        {
+            remainingPanels.forEach(panel => { panel.Clear(); });
+            this.startFinalRound();
+        }
+    }
+    
+    startNextRound()
+    {
+        this.playAreaText.innerHTML = this.playerNames[this.activePlayer] + " SELECT ANY TWO PANELS OR SOLVE THE PUZZLE";
         this.enableSelecting();
         
-        if (playerNumber == 1 && this.ai)
+        if (this.activePlayer == 1 && this.ai)
             this.ai.QueueNextChoices(this.puzzlePanels);
+    }
+    
+    startFinalRound()
+    {
+        this.isInFinalRound = true;
+        this.wrongFinalAnswers = 0;
+        this.playAreaText.innerHTML = this.playerNames[this.activePlayer] + " CAN YOU SOLVE THE PUZZLE?";
+        this.solveButton.style.display = "none";
+        
+        var yesButton = document.getElementById("yesSolveButton");
+        yesButton.style.display = "flex";
+        var noButton = document.getElementById("noSolveButton");
+        noButton.style.display = "flex";
+        
+        yesButton.addEventListener("click", this.onSolveClicked.bind(this));
+        noButton.addEventListener("click", this.incorrectFinalAnswerGiven.bind(this));
+    }
+    
+    incorrectFinalAnswerGiven()
+    {
+        ++this.wrongFinalAnswers;
+        if (this.wrongFinalAnswers == 1)
+        {
+            this.activePlayer = this.activePlayer == 0 ? 1 : 0;
+            this.playAreaText.innerHTML = this.playerNames[this.activePlayer] + " CAN YOU SOLVE THE PUZZLE?";
+        }
+        else
+        {
+            this.activePlayer = 2;
+            this.ShowAnswer();
+        }
     }
 
     onPanelClicked(evt)
@@ -124,7 +175,7 @@ class PlayScene
 
     performSelect(id)
     {
-        this.solveButton.style.visibility = "hidden";
+        this.solveButtons.style.visibility = "hidden";
         this.canSelect = false;
         
         if (this.selectionsThisRound.length > 0 && this.puzzlePanels[id].id == this.selectionsThisRound[this.selectionsThisRound.length - 1].id)
@@ -150,7 +201,7 @@ class PlayScene
                     // It's a match!
                     setTimeout(function() {
                         switchScene(this.stageScene.GetDOM().id, false);
-                        this.stageScene.AwardPrizeToPlayer(this.activePlayer, this.selectionsThisRound[0].prize);
+                        this.stageScene.AwardPrizeToPlayer(this.activePlayer, this.selectionsThisRound[0].prize, false);
                     }.bind(this), 1000);
                 }
                 else
@@ -169,7 +220,11 @@ class PlayScene
                 setTimeout((function() {
                     var notWildPanel = this.selectionsThisRound[0].prize.value != PrizeManager.wildPrize.value ? this.selectionsThisRound[0] : this.selectionsThisRound[1];
                     this.selectMatch(notWildPanel);
-                }).bind(this), 250);
+                    setTimeout(function() {
+                        switchScene(this.stageScene.GetDOM().id, false);
+                        this.stageScene.AwardPrizeToPlayer(this.activePlayer, notWildPanel.prize, false);
+                    }.bind(this), 900);
+                }).bind(this), 100);
             }
             
             // Both are wild
@@ -185,7 +240,11 @@ class PlayScene
             // this.canSelect = false;
             setTimeout((function() {
                 this.selectMatch(this.selectionsThisRound[2]);
-            }).bind(this), 250);
+                setTimeout(function() {
+                    switchScene(this.stageScene.GetDOM().id, false);
+                    this.stageScene.AwardPrizeToPlayer(this.activePlayer, this.selectionsThisRound[2].prize, true);
+                }.bind(this), 900);
+            }).bind(this), 100);
         }
         
         // Delay selections maybe? At least for AI
@@ -197,6 +256,12 @@ class PlayScene
 
     ClearSelected()
     {
+        if (this.isInFinalRound)
+        {
+            this.incorrectFinalAnswerGiven();
+            return;
+        }
+        
         this.selectionsThisRound.forEach(panel => {
             panel.Clear();
             if (this.ai)
@@ -234,7 +299,6 @@ class PlayScene
             {
                 this.puzzlePanels[index].Select();
                 this.selectionsThisRound.push(this.puzzlePanels[index]);
-                setTimeout(this.ClearSelected.bind(this), 1000);
             }
         }
     }
@@ -256,6 +320,23 @@ class PlayScene
             switchScene(this.stageScene.GetDOM().id, false);
             this.stageScene.PlayerGuess(this.activePlayer, results.input1.toUpperCase());
         }
+    }
+    
+    ShowAnswer()
+    {
+        this.solveButtons.style.visibility = "hidden";
+        this.puzzlePanels.forEach(panel => {
+            if (panel != null)
+                panel.Clear();
+        });
+        if (this.activePlayer == 2)
+            this.playAreaText.innerHTML = PuzzleManager.GetAnswer() + "<br>NO ONE SOLVED IT<br>PRESS ANYWHERE TO CONTINUE</br>";
+        else
+            this.playAreaText.innerHTML = PuzzleManager.GetAnswer() + "<br>" + this.playerNames[this.activePlayer] + " SOLVED IT!<br>PRESS ANYWHERE TO CONTINUE</br>";
+        
+        this.playScene.addEventListener("click", function() {
+            addScene(new TitleScene(), true);
+        });
     }
 
     Update(deltaTime)

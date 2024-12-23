@@ -113,24 +113,48 @@
     width: 100%;
 }
 
-#solveButton
+#solveButtons
 {
-    background-color: #ff5555;
     text-align: center;
-    margin: 0rem 6rem;
-    padding: 1rem!important;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #ffff55;
 }
 
-#solveButton div
+#solveButton, #yesSolveButton, #noSolveButton
 {
     display: flex;
-    width: 100%;
-    height: 100%;
-    border: 0.5rem solid #ffff55;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    color: #ffff55;
-    font-size: 2rem;
-    font-weight: bold;
+    background-color: #ff5555;
+    height: 100%;
+}
+
+#solveButton>div, #yesSolveButton>div, #noSolveButton>div
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #ffff55;
+    width: 90%;
+    height: 80%;
+}
+
+#solveButton>div>span, #yesSolveButton>div>span, #noSolveButton>div>span
+{
+    background-color: #ff5555;
+    width: 90%;
+    height: 80%;
+}
+
+#solveButton
+{
+    width: 100%;
+}
+
+#yesSolveButton, #noSolveButton
+{
+    width: 40%;
 }

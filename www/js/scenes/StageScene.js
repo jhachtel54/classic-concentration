@@ -159,11 +159,14 @@ class StageScene
             this.adjustTextLength(prizeText, 280);
         }
         
-        setTimeout(function() {
-            this.startAnimation("look", opponentNumber, function() {
-                this.startAnimation("cheer", playerNumber, this.returnToPlayArea.bind(this));
-            }.bind(this));
-        }.bind(this), 333);
+        if (prize != PrizeManager.doubleWildPrize)
+        {
+            setTimeout(function() {
+                    this.startAnimation("look", opponentNumber, function() {
+                        this.startAnimation("cheer", playerNumber, this.returnToPlayArea.bind(this));
+                    }.bind(this));
+            }.bind(this), 333);
+        }
     }
     
     setPlayerSprite(href, playerNumber)
@@ -283,12 +286,23 @@ class StageScene
         }
     }
     
-    AwardPrizeToPlayer(playerNumber, prize)
+    AwardPrizeToPlayer(playerNumber, prize, doubleWild)
     {
-        this.claimedPrizes[playerNumber].push(prize);
-        setTimeout(function() {
-            this.addPrizeToBoard(playerNumber, prize);
-        }.bind(this), 800);
+        if (doubleWild)
+        {
+            this.claimedPrizes[playerNumber].push(PrizeManager.doubleWildPrize);
+            setTimeout(function() {
+                this.addPrizeToBoard(playerNumber, PrizeManager.doubleWildPrize);
+                this.AwardPrizeToPlayer(playerNumber, prize, false)
+            }.bind(this), 800);
+        }
+        else
+        {
+            this.claimedPrizes[playerNumber].push(prize);
+            setTimeout(function() {
+                this.addPrizeToBoard(playerNumber, prize);
+            }.bind(this), 800);
+        }
     }
     
     returnToPlayArea()
@@ -302,6 +316,15 @@ class StageScene
         }.bind(this), 1000);
     }
     
+    completeGame()
+    {
+        switchScene(this.playScene.GetDOM().id, false);
+        this.setPlayerSprite(this.playerAvatars[0].SetState("idle"), 1);
+        this.setPlayerSprite(this.playerAvatars[1].SetState("idle"), 2);
+        document.getElementById("resultText").innerHTML = "";
+        this.playScene.ShowAnswer();
+    }
+    
     PlayerGuess(playerNumber, guess)
     {
         var opponentNumber = playerNumber == 0 ? 1 : 0;
@@ -310,7 +333,7 @@ class StageScene
             setTimeout(function() {
                 this.startAnimation("look", opponentNumber, function() {
                     document.getElementById("resultText").innerHTML = "<< CORRECT ANSWER >>";
-                    this.startAnimation("cheer", playerNumber, this.returnToPlayArea.bind(this));
+                    this.startAnimation("cheer", playerNumber, this.completeGame.bind(this));
                 }.bind(this));
             }.bind(this), 1000);
         }

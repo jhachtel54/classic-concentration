@@ -351,7 +351,7 @@ class PlayScene
         if (this.stopUpdating)
             return;
         
-        if (this.ai.choicesQueue.length > 0)
+        if (this.ai && this.ai.choicesQueue.length > 0)
         {
             this.aiTimer += deltaTime;
             if (this.aiTimer > this.aiDelay)

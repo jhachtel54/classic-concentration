@@ -157,6 +157,9 @@ class PlayScene
     
     incorrectFinalAnswerGiven()
     {
+        if (this.ai && this.activePlayer == 1)
+            return;
+        
         ++this.wrongFinalAnswers;
         if (this.wrongFinalAnswers == 1)
         {
@@ -326,6 +329,9 @@ class PlayScene
     
     onSolveClicked()
     {
+        if (this.ai && this.activePlayer == 1)
+            return;
+        
         navigator.notification.prompt("What is the answer?", this.onSolveDialogResolve.bind(this), "Puzzle", ["OK", "Cancel"], "");
     }
     
@@ -349,9 +355,9 @@ class PlayScene
                 panel.Clear();
         });
         if (this.activePlayer == 2)
-            this.playAreaText.innerHTML = PuzzleManager.GetAnswer() + "<br>NO ONE SOLVED IT<br>PRESS ANYWHERE TO CONTINUE</br>";
+            this.playAreaText.innerHTML = PuzzleManager.GetAnswer() + "<br>NO ONE SOLVED IT... TAP ANYWHERE TO CONTINUE</br>";
         else
-            this.playAreaText.innerHTML = PuzzleManager.GetAnswer() + "<br>" + this.playerNames[this.activePlayer] + " SOLVED IT! PRESS ANYWHERE TO CONTINUE";
+            this.playAreaText.innerHTML = PuzzleManager.GetAnswer() + "<br>" + this.playerNames[this.activePlayer] + " SOLVED IT! TAP ANYWHERE TO CONTINUE";
         
         this.playScene.addEventListener("click", function() {
             addScene(new TitleScene(false), true);
@@ -372,7 +378,7 @@ class PlayScene
                 this.aiTimer = 0;
             }
         }
-        else if (this.ai && this.activePlayer == 1 && this.ai.WantsToSolvePuzzle())
+        else if (this.ai && this.activePlayer == 1 && (this.ai.WantsToSolvePuzzle() || this.isInFinalRound))
         {
             this.aiTimer += deltaTime;
             if (this.aiTimer > this.aiDelay)

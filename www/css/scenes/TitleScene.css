@@ -44,3 +44,16 @@
     align-items: center;
     flex-direction: column;
 }
+
+#scoreButton
+{
+    background-color: #2a2a2a!important;
+    color: #555555;
+}
+
+#scoreButton>div
+{
+    background-color: #2a2a2a;
+    color: #555555;
+    border: 1rem solid #555555!important;
+}

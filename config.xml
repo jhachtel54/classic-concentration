@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.jameshachtel.concentration" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.jameshachtel.concentration" android-versionCode="1000001" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
     <name>Classic Concentration</name>
     <description>Classic Concentration for mobile</description>
     <author email="jhachtel54@gmail.com" href="https://cordova.apache.org">
@@ -45,5 +45,15 @@
         <icon src="resources/icons/ios/icon-216.png" width="216" height="216" />
         <icon src="resources/icons/ios/icon-234.png" width="234" height="234" />
         <icon src="resources/icons/ios/icon-1024.png" width="1024" height="1024" />
+    </platform>
+    <platform name="android">
+        <preference name="AndroidWindowSplashScreenAnimatedIcon" value="resources/icons/android/transparent.png" />
+        <preference name="AndroidWindowSplashScreenBackground" value="#000000" />
+        <preference name="AndroidWindowSplashScreenIconBackgroundColor" value="#000000" />
+        <!-- <icon background="resources/icons/android/mipmap-mdpi/ic_launcher_background.png" foreground="resources/icons/android/mipmap-mdpi/ic_launcher_foreground.png" density="mdpi" /> -->
+        <!-- <icon background="resources/icons/android/mipmap-hdpi/ic_launcher_background.png" foreground="resources/icons/android/mipmap-hdpi/ic_launcher_foreground.png" density="hdpi" /> -->
+        <!-- <icon background="resources/icons/android/mipmap-xhdpi/ic_launcher_background.png" foreground="resources/icons/android/mipmap-xhdpi/ic_launcher_foreground.png" density="xhdpi" /> -->
+        <!-- <icon background="resources/icons/android/mipmap-xxhdpi/ic_launcher_background.png" foreground="resources/icons/android/mipmap-xxhdpi/ic_launcher_foreground.png" density="xxhdpi" /> -->
+        <!-- <icon background="resources/icons/android/mipmap-xxxhdpi/ic_launcher_background.png" foreground="resources/icons/android/mipmap-xxxhdpi/ic_launcher_foreground.png" density="xxxhdpi" /> -->
     </platform>
 </widget>

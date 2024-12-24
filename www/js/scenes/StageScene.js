@@ -44,14 +44,13 @@ class StageScene
                                 "<div id='characterSelectTitle' class='col text-center m-auto'>PLAYER 1</div>" +
                                 "<div class='col-2'></div>" +
                             "</div>" +
-                            "<div class='row h-5'></div>" +
-                            "<div class='row h-10'>" +
+                            "<div class='row h-15'>" +
                                 "<div class='col-1'></div>" +
                                 "<div class='col-4 m-auto'>NAME</div>" +
-                                "<input id='playerNameTextBox' type='text' class='col' />" +
+                                "<input id='playerNameTextBox' type='text' class='col h-80' />" +
                                 "<div class='col-1'></div>" +
                             "</div>" +
-                            "<div class='row h-50'>" +
+                            "<div class='row h-45'>" +
                                 "<div id='prevAvatarButton' class='col-2 text-end m-auto' style='font-size:6rem;'><</div>" +
                                 "<div class='col h-100'>" +
                                     "<svg id='characterSelectAvatar' viewBox='0 0 160 228' class='w-100 h-100'>" +
@@ -60,9 +59,8 @@ class StageScene
                                 "</div>" +
                                 "<div id='nextAvatarButton' class='col-2 text-begin m-auto' style='font-size:6rem;'>></div>" +
                             "</div>" +
-                            "<div class='row h-5'></div>" +
-                            "<div class='row h-10'>" +
-                                "<div class='col d-flex justify-content-between text-center' style='font-size:2rem; margin:0px 2%;'>" +
+                            "<div class='row h-20'>" +
+                                "<div class='col d-flex flex-column align-content-around text-center m-0' style='font-size:1.75rem;'>" +
                                     "<div id='characterSelectButton1' class='m-auto characterSelectButton'>ADD PLAYER 2</div>" +
                                     "<div id='characterSelectButton2' class='m-auto characterSelectButton'>ADD AI PLAYER</div>" +
                                 "</div>" +

@@ -44,6 +44,13 @@ class StageScene
                                 "<div id='characterSelectTitle' class='col text-center m-auto'>PLAYER 1</div>" +
                                 "<div class='col-2'></div>" +
                             "</div>" +
+                            "<div class='row h-5'></div>" +
+                            "<div class='row h-10'>" +
+                                "<div class='col-1'></div>" +
+                                "<div class='col-4 m-auto'>NAME</div>" +
+                                "<input id='playerNameTextBox' type='text' class='col' />" +
+                                "<div class='col-1'></div>" +
+                            "</div>" +
                             "<div class='row h-50'>" +
                                 "<div id='prevAvatarButton' class='col-2 text-end m-auto' style='font-size:6rem;'><</div>" +
                                 "<div class='col h-100'>" +
@@ -52,13 +59,6 @@ class StageScene
                                     "</svg>" +
                                 "</div>" +
                                 "<div id='nextAvatarButton' class='col-2 text-begin m-auto' style='font-size:6rem;'>></div>" +
-                            "</div>" +
-                            "<div class='row h-5'></div>" +
-                            "<div class='row h-10'>" +
-                                "<div class='col-1'></div>" +
-                                "<div class='col-4'>NAME</div>" +
-                                "<input id='playerNameTextBox' type='text' class='col' />" +
-                                "<div class='col-1'></div>" +
                             "</div>" +
                             "<div class='row h-5'></div>" +
                             "<div class='row h-10'>" +
@@ -239,7 +239,7 @@ class StageScene
             if (playerNameTextBox.value.length == 0)
                 return;
             
-            this.setPlayerName(playerNameTextBox.value.toUpperCase(), 0);
+            this.setPlayerName(playerNameTextBox.value.toUpperCase().trim(), 0);
             this.playerAvatars[0] = new Avatar(gender, spriteNumber, playerNameTextBox.value.toUpperCase());
             this.setPlayerSprite(this.playerAvatars[0].SetState("idle"), 1);
             
@@ -269,7 +269,7 @@ class StageScene
             }
             else if (playerNameTextBox.value.length > 0)
             {
-                this.setPlayerName(playerNameTextBox.value.toUpperCase(), 1);
+                this.setPlayerName(playerNameTextBox.value.toUpperCase().trim(), 1);
                 this.playerAvatars[1] = new Avatar(gender, spriteNumber, playerNameTextBox.value.toUpperCase());
                 this.setPlayerSprite(this.playerAvatars[1].SetState("idle"), 2);
                 document.getElementById("characterSelectDialog").style.display = "none";

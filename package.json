@@ -16,6 +16,7 @@
     "cordova-browser": "^7.0.0",
     "cordova-ios": "^7.1.1",
     "cordova-plugin-dialogs": "^2.0.2",
+    "cordova-plugin-ionic-keyboard": "^2.2.0",
     "cordova-plugin-screen-orientation": "^3.0.4"
   },
   "cordova": {
@@ -25,7 +26,8 @@
     ],
     "plugins": {
       "cordova-plugin-screen-orientation": {},
-      "cordova-plugin-dialogs": {}
+      "cordova-plugin-dialogs": {},
+      "cordova-plugin-ionic-keyboard": {}
     }
   }
 }

@@ -323,7 +323,7 @@ class PlayScene
         if (results.buttonIndex == 1)
         {
             switchScene(this.stageScene.GetDOM().id, false);
-            this.stageScene.PlayerGuess(this.activePlayer, results.input1.toUpperCase());
+            this.stageScene.PlayerGuess(this.activePlayer, results.input1.toUpperCase().trim());
         }
     }
     

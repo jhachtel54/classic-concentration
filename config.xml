@@ -11,4 +11,7 @@
     <platform name="browser">
         <hook type="before_prepare" src="hooks/appBrowserCopyFromPlatformToWWW.sh" />
     </platform>
+    <platform name="ios">
+        <preference name="KeyboardResize" value="false" />
+    </platform>
 </widget>

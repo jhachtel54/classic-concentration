@@ -70,7 +70,6 @@ class PuzzlePanel
             var wildPathId = "wildPath" + id
             wildPath.setAttribute("id", wildPathId);
             wildPath.setAttribute("d", "M0 54 L108 24");
-            wildPath.setAttribute("style", "fill:none;stroke:none;");
             wildSVG.appendChild(wildPath);
             
             var wildText = document.createElementNS('http://www.w3.org/2000/svg','text');
@@ -80,7 +79,7 @@ class PuzzlePanel
             wildTextPath.setAttribute("href", "#" + wildPathId);
             wildTextPath.setAttribute("startOffset", "50%");
             wildTextPath.setAttribute("text-anchor", "middle");
-            wildTextPath.setAttribute("textLength", "85%");
+            wildTextPath.setAttribute("textLength", "100%");
             wildTextPath.classList.add("wildTextPath");
             wildTextPath.innerHTML = "WiLD!";
             wildText.appendChild(wildTextPath);

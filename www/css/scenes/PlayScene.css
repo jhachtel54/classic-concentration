@@ -21,8 +21,8 @@
 .puzzlePanel
 {
     background-color: #ff5555;
-    font-size: 4rem;
-    line-height: 4rem;
+    font-size: 3rem;
+    line-height: 3rem;
     font-weight: bold;
     color: #55ff55;
     height: 100%;
@@ -95,7 +95,7 @@
 .wildTextPath
 {
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 4rem;
 }
 
 #playAreaText
@@ -103,7 +103,7 @@
     height: 10%;
     color: #ffff55;
     width: 100%;
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: bold;
 }
 
@@ -116,7 +116,7 @@
 #solveButtons
 {
     text-align: center;
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: bold;
     color: #ffff55;
 }
@@ -147,6 +147,7 @@
     background-color: #ff5555;
     width: 90%;
     height: 80%;
+    margin: auto;
 }
 
 #solveButton

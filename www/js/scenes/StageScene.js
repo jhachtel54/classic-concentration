@@ -45,13 +45,13 @@ class StageScene
                                 "<div class='col-2'></div>" +
                             "</div>" +
                             "<div class='row h-50'>" +
-                                "<div id='prevAvatarButton' class='col-2 text-end m-auto' style='font-size:8rem;'>🡄</div>" +
+                                "<div id='prevAvatarButton' class='col-2 text-end m-auto' style='font-size:6rem;'><</div>" +
                                 "<div class='col h-100'>" +
                                     "<svg id='characterSelectAvatar' viewBox='0 0 160 228' class='w-100 h-100'>" +
                                         "<use width='160' height='228' href='#male1Idle' />" +
                                     "</svg>" +
                                 "</div>" +
-                                "<div id='nextAvatarButton' class='col-2 text-begin m-auto' style='font-size:8rem;'>🡆</div>" +
+                                "<div id='nextAvatarButton' class='col-2 text-begin m-auto' style='font-size:6rem;'>></div>" +
                             "</div>" +
                             "<div class='row h-5'></div>" +
                             "<div class='row h-10'>" +
@@ -62,7 +62,7 @@ class StageScene
                             "</div>" +
                             "<div class='row h-5'></div>" +
                             "<div class='row h-10'>" +
-                                "<div class='col d-flex justify-content-between text-center' style='font-size:3.25rem; margin:0px 2%;'>" +
+                                "<div class='col d-flex justify-content-between text-center' style='font-size:2rem; margin:0px 2%;'>" +
                                     "<div id='characterSelectButton1' class='m-auto characterSelectButton'>ADD PLAYER 2</div>" +
                                     "<div id='characterSelectButton2' class='m-auto characterSelectButton'>ADD AI PLAYER</div>" +
                                 "</div>" +
@@ -104,19 +104,18 @@ class StageScene
         characterSelectButton2.addEventListener("click", this.onClickedDialogButton.bind(this));
         
         // DEBUG!!!
-        // this.setPlayerName("JAMES", 0);
-        // this.setPlayerName("HAILEY", 1);
-        // this.playerAvatars[0] = new Avatar("male", 1, "JAMES");
-        // this.playerAvatars[1] = new Avatar("female", 2, "HAILEY");
-        // this.setPlayerSprite(this.playerAvatars[0].SetState("idle"), 1);
-        // this.setPlayerSprite(this.playerAvatars[1].SetState("idle"), 2);
-        // document.getElementById("characterSelectDialog").style.display = "none";
-        
-        // // TODO: START THE GAME (check the playerCreationState)
-        // setTimeout(function() {
-            // this.playScene = new PlayScene(this, "JAMES", "HAILEY", new AIPlayer(.10, 12));
-            // addScene(this.playScene, false);
-        // }.bind(this), 1000);
+        //this.setPlayerName("JAMES", 0);
+        //this.setPlayerName("HAILEY", 1);
+        //this.playerAvatars[0] = new Avatar("male", 1, "JAMES");
+        //this.playerAvatars[1] = new Avatar("female", 2, "HAILEY");
+        //this.setPlayerSprite(this.playerAvatars[0].SetState("idle"), 1);
+        //this.setPlayerSprite(this.playerAvatars[1].SetState("idle"), 2);
+        //document.getElementById("characterSelectDialog").style.display = "none";
+        //
+        //setTimeout(function() {
+        //    this.playScene = new PlayScene(this, "JAMES", "HAILEY", new AIPlayer(.10, 12));
+        //    addScene(this.playScene, false);
+        //}.bind(this), 1000);
     }
     
     GetDOM()

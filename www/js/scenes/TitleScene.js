@@ -1,7 +1,7 @@
 class TitleScene
 {
-    static COPYRIGHT_TIME = 1500;
-    static ABOUT_TIME = 3000;
+    static COPYRIGHT_TIME = 3000;
+    static ABOUT_TIME = 6000;
     constructor()
     {
         this.splashTime = 0;
@@ -73,10 +73,7 @@ class TitleScene
     
     onClickedPlay()
     {
-        addScene(new StageScene(/*"James", "img/Avatars/Male-01.png", "Hailey", "img/Avatars/Female-02.png", {
-            logicLevel: 0.8,
-            memoryLevel: 3
-        }*/), true);
+        addScene(new StageScene(), true);
     }
     
     onClickedOptions()

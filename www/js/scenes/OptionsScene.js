@@ -27,16 +27,16 @@ class OptionsScene
         this.rootElement.classList.add("sceneInnerContainer");
         this.rootElement.innerHTML = "" +
             "<div class='uiArea'>" +
-                "<div class='container-fluid h-100 p-0'>" +
+                "<div class='container-fluid h-85 p-0'>" +
                     "<div class='row h-20'>" +
                         "<div class='col-1 h-100'></div>" +
                         "<div class='col h-100'>" +
-                            "<img id='optionsBanner' src='/img/Options.png' />" +
+                            "<img id='optionsBanner' src='img/Options.png' />" +
                         "</div>" +
                         "<div class='col-1 h-100'></div>" +
                     "</div>" +
-                    "<div class='row h-10'></div>" +
-                    "<div class='row h-70'>" +
+                    "<div class='row h-5'></div>" +
+                    "<div class='row h-75'>" +
                         "<div class='col-1'></div>" +
                         "<div class='col'>" +
                             "<div id='optionsListContainer' class='container-fluid h-100 p-0'></div>" +

@@ -3,7 +3,7 @@ class OptionsScene
     constructor()
     {
         this.defaults = {
-            sfx: 0,
+            sfx: 1,
             vibration: "OFF",
             parental: "ON",
             ai: "EASY",
@@ -58,8 +58,9 @@ class OptionsScene
         
         var optionsListContainer = document.getElementById("optionsListContainer");
         
-        var sfx = loadNumericalValue("sfx");
-        this.sfxOption = new OptionsRange(optionsListContainer, "SFX VOLUME", 0, 100, sfx, true);
+        var sfx = loadNumericalValue("sfx") * 100;
+        this.sfxOption = new OptionsRange(optionsListContainer, "SFX VOLUME", 0, 100, sfx, false);
+        this.sfxOption.AddEventListener("change", this.PlaySFX.bind(this));
         
         var vibration = loadBooleanValue("vibration") ? "ON" : "OFF";
         this.vibrationOption = new OptionsRadio(optionsListContainer, "VIBRATION", ["ON", "OFF"], vibration, true);
@@ -122,18 +123,27 @@ class OptionsScene
         };
     }
     
+    PlaySFX(value)
+    {
+        AudioPlayer.SetVolume(value / 100);
+        AudioPlayer.Play("select");
+    }
+    
     SaveAndExit()
     {
-        window.localStorage.setItem("sfx", this.sfxOption.GetValue());
+        window.localStorage.setItem("sfx", this.sfxOption.GetValue() / 100);
         window.localStorage.setItem("vibration", this.vibrationOption.GetValue() == "ON");
         window.localStorage.setItem("aiLogic", (100 - this.logicOption.GetValue()) * 0.01);
         window.localStorage.setItem("aiMemory", this.memoryOption.GetValue());
         window.localStorage.setItem("parentalControls", "" + this.parentalOption.GetValue() == "ON");
+        
+        AudioPlayer.SetVolume(this.sfxOption.GetValue() / 100);
         switchScene("titleScene", true);
     }
     
     Cancel()
     {
+        AudioPlayer.SetVolume(loadNumericalValue("sfx"));
         switchScene("titleScene", true);
     }
     
@@ -143,6 +153,8 @@ class OptionsScene
         this.vibrationOption.SetValue(this.defaults.vibration);
         this.aiOption.SetValue(this.defaults.ai);
         this.parentalOption.SetValue(this.defaults.parental);
+        
+        AudioPlayer.SetVolume(this.defaults.sfx / 100);
     }
     
     determineAIOption(logic, memory)
@@ -208,11 +220,15 @@ class OptionsRange
         parentElement.appendChild(this.rootElement);
         
         this.rangeElement.addEventListener("input", this.onChange.bind(this));
+        this.onChangeDelegates = [];
     }
     
     onChange(evt)
     {
         this.valueElement.innerHTML = this.rangeElement.value;
+        this.onChangeDelegates.forEach((delegate) => {
+            delegate(this.GetValue());
+        });
     }
     
     GetValue()
@@ -234,6 +250,28 @@ class OptionsRange
     {
         this.rangeElement.value = value;
         this.valueElement.innerHTML = value;
+    }
+    
+    AddEventListener(type, delegate)
+    {
+        if (type == "change")
+        {
+            this.onChangeDelegates.push(delegate);
+        }
+    }
+    
+    RemoveEventListener(type, delegate)
+    {
+        if (type == "change")
+        {
+            for (var index = 0; index < this.onChangeDelegates.length; ++index)
+            {
+                if ("" + delegate == "" + this.onChangeDelegates[index])
+                {
+                    this.onChangeDelegates.splice(index, 1);
+                }
+            }
+        }
     }
 }
 

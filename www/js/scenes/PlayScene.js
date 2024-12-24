@@ -10,10 +10,12 @@ class PlayScene
         this.ai = ai;
         this.aiDelay = 750;
         this.aiTimer = 0;
+        this.activePlayer = -1;
     }
     
     init(parentElement)
     {
+        AudioPlayer.Stop("intro");
         this.buildDOM(parentElement);
     }
     
@@ -107,7 +109,10 @@ class PlayScene
     
     changeActivePlayer(playerNumber)
     {
-        this.activePlayer = playerNumber;
+        if (this.activePlayer == playerNumber)
+            AudioPlayer.Play("prompt");
+        else
+            this.activePlayer = playerNumber;
         this.solveButtons.style.visibility = "visible";
         
         var remainingPanels = this.puzzlePanels.filter(panel => { return panel != null; });
@@ -177,6 +182,7 @@ class PlayScene
 
     performSelect(id)
     {
+        AudioPlayer.Play("select");
         this.solveButtons.style.visibility = "hidden";
         this.canSelect = false;
         
@@ -203,6 +209,7 @@ class PlayScene
                     // It's a match!
                     setTimeout(function() {
                         switchScene(this.stageScene.GetDOM().id, false);
+                        AudioPlayer.Play("transition");
                         this.stageScene.AwardPrizeToPlayer(this.activePlayer, this.selectionsThisRound[0].prize, false);
                     }.bind(this), 1000);
                 }
@@ -224,9 +231,10 @@ class PlayScene
                     this.selectMatch(notWildPanel);
                     setTimeout(function() {
                         switchScene(this.stageScene.GetDOM().id, false);
+                        AudioPlayer.Play("transition");
                         this.stageScene.AwardPrizeToPlayer(this.activePlayer, notWildPanel.prize, false);
-                    }.bind(this), 900);
-                }).bind(this), 100);
+                    }.bind(this), 1000);
+                }).bind(this), 250);
             }
             
             // Both are wild
@@ -244,9 +252,10 @@ class PlayScene
                 this.selectMatch(this.selectionsThisRound[2]);
                 setTimeout(function() {
                     switchScene(this.stageScene.GetDOM().id, false);
+                    AudioPlayer.Play("transition");
                     this.stageScene.AwardPrizeToPlayer(this.activePlayer, this.selectionsThisRound[2].prize, true);
-                }.bind(this), 900);
-            }).bind(this), 100);
+                }.bind(this), 1000);
+            }).bind(this), 250);
         }
         
         // Delay selections maybe? At least for AI
@@ -283,6 +292,7 @@ class PlayScene
 
     resetSelected()
     {
+        AudioPlayer.Play("reset");
         this.selectionsThisRound.forEach(panel => {
             panel.Reset();
         });
@@ -299,6 +309,7 @@ class PlayScene
             
             if (this.puzzlePanels[index].prize.name == notWildPanel.prize.name && this.puzzlePanels[index].id != notWildPanel.id)
             {
+                AudioPlayer.Play("select");
                 this.puzzlePanels[index].Select();
                 this.selectionsThisRound.push(this.puzzlePanels[index]);
             }
@@ -323,6 +334,7 @@ class PlayScene
         if (results.buttonIndex == 1)
         {
             switchScene(this.stageScene.GetDOM().id, false);
+            AudioPlayer.Play("transition");
             this.stageScene.PlayerGuess(this.activePlayer, results.input1.toUpperCase().trim());
         }
     }
@@ -376,6 +388,7 @@ class PlayScene
                 else if (this.playAreaText.innerHTML.length == answer.length + aiTypingPrefix.length)
                 {
                     switchScene(this.stageScene.GetDOM().id, false);
+                    AudioPlayer.Play("transition");
                     this.stageScene.PlayerGuess(this.activePlayer, answer);
                 }
                 else

@@ -12,8 +12,8 @@ class StageScene
     
     init(parentElement)
     {
+        AudioPlayer.Play("intro");
         this.buildDOM(parentElement);
-        //this.clearFreePanels();
     }
     
     buildDOM(parentElement)
@@ -132,6 +132,7 @@ class StageScene
     
     addPrizeToBoard(playerNumber, prize)
     {
+        AudioPlayer.Play("select");
         var opponentNumber = playerNumber == 0 ? 1 : 0;
         if (this.claimedPrizes[playerNumber].length <= 8)
         {
@@ -162,6 +163,7 @@ class StageScene
         {
             setTimeout(function() {
                     this.startAnimation("look", opponentNumber, function() {
+                        AudioPlayer.Play("fanfare");
                         this.startAnimation("cheer", playerNumber, this.returnToPlayArea.bind(this));
                     }.bind(this));
             }.bind(this), 333);
@@ -205,6 +207,7 @@ class StageScene
     
     selectPrevAvatar()
     {
+        AudioPlayer.Play("select");
         --this.currentAvatar;
         if (this.currentAvatar < 0)
             this.currentAvatar = this.avatars.length - 1;
@@ -213,6 +216,7 @@ class StageScene
     
     selectNextAvatar()
     {
+        AudioPlayer.Play("select");
         ++this.currentAvatar;
         if (this.currentAvatar >= this.avatars.length)
             this.currentAvatar = 0;
@@ -228,6 +232,7 @@ class StageScene
     
     onClickedDialogButton(evt)
     {
+        AudioPlayer.Play("select");
         var playerNameTextBox = document.getElementById("playerNameTextBox");
         
         var sprite = this.avatars[this.currentAvatar];
@@ -335,6 +340,7 @@ class StageScene
         {
             setTimeout(function() {
                 this.startAnimation("look", opponentNumber, function() {
+                    AudioPlayer.Play("correct");
                     document.getElementById("resultText").innerHTML = "<< CORRECT ANSWER >>";
                     this.startAnimation("cheer", playerNumber, this.completeGame.bind(this));
                 }.bind(this));
@@ -344,6 +350,7 @@ class StageScene
         {
             setTimeout(function() {
                 this.startAnimation("look", opponentNumber, function() {
+                    AudioPlayer.Play("wrong");
                     document.getElementById("resultText").innerHTML = "<< WRONG ANSWER >>";
                     this.startAnimation("wrong", playerNumber, this.returnToPlayArea.bind(this));
                 }.bind(this));

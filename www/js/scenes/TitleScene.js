@@ -11,6 +11,7 @@ class TitleScene
     
     init(parentElement)
     {
+        // AudioPlayer.Play("intro");
         this.buildDOM(parentElement);
         
         var playButton = document.getElementById("playButton");

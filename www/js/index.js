@@ -33,13 +33,14 @@ function onDeviceReady()
     if (window.localStorage.getItem("version") == null)
     {
         window.localStorage.setItem("version", "0.0");
-        window.localStorage.setItem("sfx", 0);
+        window.localStorage.setItem("sfx", 1);
         window.localStorage.setItem("vibration", false);
         window.localStorage.setItem("aiLogic", 1);
         window.localStorage.setItem("aiMemory", 3);
         window.localStorage.setItem("parentalControls", true);
     }
     
+    AudioPlayer.SetVolume(loadNumericalValue("sfx"));
     sceneContainer = document.getElementById("sceneContainer");
     addScene(new TitleScene(true), true);
     // addScene(new StageScene(), true);

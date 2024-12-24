@@ -32,7 +32,6 @@ function onDeviceReady()
     
     if (window.localStorage.getItem("version") == null)
     {
-        console.log("Making new save");
         window.localStorage.setItem("version", "0.0");
         window.localStorage.setItem("sfx", 0);
         window.localStorage.setItem("vibration", false);
@@ -42,7 +41,7 @@ function onDeviceReady()
     }
     
     sceneContainer = document.getElementById("sceneContainer");
-    addScene(new TitleScene(), true);
+    addScene(new TitleScene(true), true);
     // addScene(new StageScene(), true);
     
     window.requestAnimationFrame((timestamp) => update(timestamp));

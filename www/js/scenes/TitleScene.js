@@ -1,10 +1,12 @@
 class TitleScene
 {
-    static COPYRIGHT_TIME = 3000;
-    static ABOUT_TIME = 6000;
-    constructor()
+    static COPYRIGHT_TIME = 2000;
+    static ABOUT_TIME = 4000;
+    constructor(showCopyright)
     {
         this.splashTime = 0;
+        if (!showCopyright)
+            this.splashTime = TitleScene.ABOUT_TIME;
     }
     
     init(parentElement)

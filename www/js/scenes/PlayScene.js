@@ -339,10 +339,10 @@ class PlayScene
         if (this.activePlayer == 2)
             this.playAreaText.innerHTML = PuzzleManager.GetAnswer() + "<br>NO ONE SOLVED IT<br>PRESS ANYWHERE TO CONTINUE</br>";
         else
-            this.playAreaText.innerHTML = PuzzleManager.GetAnswer() + "<br>" + this.playerNames[this.activePlayer] + " SOLVED IT!<br>PRESS ANYWHERE TO CONTINUE</br>";
+            this.playAreaText.innerHTML = PuzzleManager.GetAnswer() + "<br>" + this.playerNames[this.activePlayer] + " SOLVED IT! PRESS ANYWHERE TO CONTINUE";
         
         this.playScene.addEventListener("click", function() {
-            addScene(new TitleScene(), true);
+            addScene(new TitleScene(false), true);
         });
     }
 

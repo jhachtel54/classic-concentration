@@ -4,7 +4,11 @@ class BonusScene
     {
         this.puzzlePanels = [];
         this.selectionsThisRound = [];
-        this.canSelect = false;
+        this.canSelect = true;
+        this.countdown = 35000;
+        this.started = false;
+        this.countdownElement = null;
+        this.numMatches = 0;
     }
     
     init(parentElement)
@@ -68,7 +72,9 @@ class BonusScene
         // var puzzleNode = document.getElementById("rebusPuzzle");
         // puzzleNode.src = PuzzleManager.SelectPuzzle();
         
-        var prizePool = PrizeManager.GeneratePrizePool(11, 2, 2);
+        this.countdownElement = document.getElementById("countdownText");
+        
+        var prizePool = PrizeManager.GenerateCarPool();
         var bonusArea = document.getElementById("bonusArea");
         for (var rowIndex = 0; rowIndex < 5; ++rowIndex)
         {
@@ -81,7 +87,7 @@ class BonusScene
                 var puzzlePanel = new PuzzlePanel(prizePool[id], id);
                 var panelDOM = puzzlePanel.GetDOM();
                 row.appendChild(panelDOM);
-                // panelDOM.addEventListener("click", this.onPanelClicked.bind(this));
+                panelDOM.addEventListener("click", this.onPanelClicked.bind(this));
                 this.puzzlePanels.push(puzzlePanel);
             }
         }
@@ -106,117 +112,70 @@ class BonusScene
 
     onPanelClicked(evt)
     {
-        // if (!this.canSelect)
-            // return;
+        if (!this.canSelect || this.countdown < 0)
+            return;
         
-        // var id = evt.target.id;
-        // var number = id.split("-")[1];
-        // this.performSelect(number);
+        this.started = true;
+        var id = evt.target.id;
+        var number = id.split("-")[1];
+        this.performSelect(number);
     }
 
     performSelect(id)
     {
-        // AudioPlayer.Play("select");
-        // this.solveButtons.style.visibility = "hidden";
-        // this.canSelect = false;
+        AudioPlayer.Play("select");
+        this.canSelect = false;
         
-        // if (this.selectionsThisRound.length > 0 && this.puzzlePanels[id].id == this.selectionsThisRound[this.selectionsThisRound.length - 1].id)
-        // {
-            // this.enableSelecting();
-            // return;
-        // }
+        if (this.selectionsThisRound.length > 0 && this.puzzlePanels[id].id == this.selectionsThisRound[this.selectionsThisRound.length - 1].id)
+        {
+            this.canSelect = true;
+            return;
+        }
         
-        // this.puzzlePanels[id].Select();
-        // this.selectionsThisRound.push(this.puzzlePanels[id]);
-        // if (this.ai)
-            // this.ai.AddPanelToMemory(this.puzzlePanels[id]);
+        this.puzzlePanels[id].Select();
+        this.selectionsThisRound.push(this.puzzlePanels[id]);
         
-        // if (this.selectionsThisRound.length == 2)
-        // {
-            // // Neither are wild
-            // if (this.selectionsThisRound[0].prize.value != PrizeManager.wildPrize.value &&
-                // this.selectionsThisRound[1].prize.value != PrizeManager.wildPrize.value)
-            // {
-                // this.playAreaText.innerHTML = "";
-                // if (this.selectionsThisRound[0].prize.name == this.selectionsThisRound[1].prize.name)
-                // {
-                    // // It's a match!
-                    // setTimeout(function() {
-                        // switchScene(this.stageScene.GetDOM().id, false);
-                        // AudioPlayer.Play("transition");
-                        // this.stageScene.AwardPrizeToPlayer(this.activePlayer, this.selectionsThisRound[0].prize, false);
-                    // }.bind(this), 1000);
-                // }
-                // else
-                // {
-                    // // Not a match
-                    // setTimeout(function() {
-                        // this.resetSelected();
-                    // }.bind(this), 1000);
-                // }
-            // }
-            
-            // // Only one is wild
-            // else if (this.selectionsThisRound[0].prize.value != this.selectionsThisRound[1].prize.value)
-            // {
-                // // this.canSelect = false;
-                // setTimeout((function() {
-                    // var notWildPanel = this.selectionsThisRound[0].prize.value != PrizeManager.wildPrize.value ? this.selectionsThisRound[0] : this.selectionsThisRound[1];
-                    // this.selectMatch(notWildPanel);
-                    // setTimeout(function() {
-                        // switchScene(this.stageScene.GetDOM().id, false);
-                        // AudioPlayer.Play("transition");
-                        // this.stageScene.AwardPrizeToPlayer(this.activePlayer, notWildPanel.prize, false);
-                    // }.bind(this), 1000);
-                // }).bind(this), 250);
-            // }
-            
-            // // Both are wild
-            // else
-            // {
-                // this.enableSelecting();
-            // }
-        // }
-        
-        // // This should only hit if two wilds were picked
-        // else if (this.selectionsThisRound.length == 3)
-        // {
-            // // this.canSelect = false;
-            // setTimeout((function() {
-                // this.selectMatch(this.selectionsThisRound[2]);
-                // setTimeout(function() {
-                    // switchScene(this.stageScene.GetDOM().id, false);
-                    // AudioPlayer.Play("transition");
-                    // this.stageScene.AwardPrizeToPlayer(this.activePlayer, this.selectionsThisRound[2].prize, true);
-                // }.bind(this), 1000);
-            // }).bind(this), 250);
-        // }
-        
-        // // Delay selections maybe? At least for AI
-        // else
-        // {
-            // this.enableSelecting();
-        // }
+        if (this.selectionsThisRound.length == 2)
+        {
+            // this.playAreaText.innerHTML = "";
+            if (this.selectionsThisRound[0].prize.name == this.selectionsThisRound[1].prize.name)
+            {
+                // It's a match!
+                setTimeout(function() {
+                    this.clearSelected();
+                }.bind(this), 1000);
+            }
+            else
+            {
+                // Not a match
+                setTimeout(function() {
+                    this.resetSelected();
+                }.bind(this), 1000);
+            }
+        }
+        else
+        {
+            this.canSelect = true;
+        }
     }
 
-    ClearSelected()
+    clearSelected()
     {
-        // if (this.isInFinalRound)
-        // {
-            // this.incorrectFinalAnswerGiven();
-            // return;
-        // }
+        ++this.numMatches;
+        this.selectionsThisRound.forEach(panel => {
+            panel.Clear(true);
+            this.puzzlePanels[panel.id] = null;
+        });
+        this.selectionsThisRound = [];
         
-        // this.selectionsThisRound.forEach(panel => {
-            // panel.Clear();
-            // if (this.ai)
-            // {
-                // this.ai.AddAmountSeen(PuzzleManager.GetWeight(panel.id));
-                // this.ai.RemovePanelFromMemory(panel.id);
-            // }
-            // this.puzzlePanels[panel.id] = null;
-        // });
-        // this.selectionsThisRound = [];
+        if (this.numMatches < 7)
+        {
+            this.canSelect = true;
+        }
+        else
+        {
+            this.canSelect = false;
+        }
         
         // this.playAreaText.innerHTML = this.playerNames[this.activePlayer] + " LOOK AT THESE PUZZLE PIECES";
         // setTimeout(function() {
@@ -226,20 +185,12 @@ class BonusScene
 
     resetSelected()
     {
-        // AudioPlayer.Play("reset");
-        // this.selectionsThisRound.forEach(panel => {
-            // panel.Reset();
-        // });
-        // this.selectionsThisRound = [];
-        // this.changeActivePlayer(this.activePlayer == 0 ? 1 : 0);
-    }
-
-    enableSelecting()
-    {
-        if (this.activePlayer == 1 && this.ai != null)
-            this.canSelect = false;
-        else
-            this.canSelect = true;
+        AudioPlayer.Play("reset");
+        this.selectionsThisRound.forEach(panel => {
+            panel.Reset();
+        });
+        this.selectionsThisRound = [];
+        this.canSelect = true;
     }
     
     ShowAnswer()
@@ -263,5 +214,12 @@ class BonusScene
 
     Update(deltaTime)
     {
+        if (this.started)
+        {
+            this.countdown -= deltaTime;
+            this.countdownElement.innerHTML = ("" + Math.ceil(this.countdown / 1000)).padStart(2, '0');
+            if (this.countdown <= 0)
+                this.started = false;
+        }
     }
 }

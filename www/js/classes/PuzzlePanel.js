@@ -106,8 +106,20 @@ class PuzzlePanel
         this.selectedDom.style.display = "flex";
     }
     
-    Clear()
+    Clear(isCar)
     {
-        this.dom.style.visibility = "hidden";
+        if (isCar)
+        {
+            var carDOM = document.createElement("img");
+            carDOM.src = "img/Car-Panel.png";
+            carDOM.classList.add("col", "puzzlePanel");
+            this.dom.parentElement.insertBefore(carDOM, this.dom);
+            this.dom.parentElement.removeChild(this.dom);
+            this.dom = carDOM;
+        }
+        else
+        {
+            this.dom.style.visibility = "hidden";
+        }
     }
 }

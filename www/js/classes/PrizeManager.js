@@ -83,6 +83,23 @@ class PrizeManager
         new Prize("BOOTS", 700),
     ];
     
+    static potentialCars = [
+        new Prize("LEXUS ES", 43190),
+        new Prize("AUDI A7", 73295),
+        new Prize("GENESIS G80", 58350),
+        new Prize("BMW 5 SERIES", 59375),
+        new Prize("ACURA TLX", 46595),
+        new Prize("CADILLAC CT5", 48990),
+        new Prize("MERCEDES-BENZ C-CLASS", 49600),
+        new Prize("HONDA ACCORD", 29390),
+        new Prize("TOYOTA CAMRY", 29795),
+        new Prize("KIA K5", 28145),
+        new Prize("HYUNDAI SONATA", 27800),
+        new Prize("NISSAN ALTIMA", 28140),
+        new Prize("SUBARU LEGACY", 26180),
+        new Prize("CHEVROLET MALIBU", 26995),
+    ];
+    
     static GeneratePrizePool(numPrizes, numMatches, numWilds)
     {
         var totalNumber = numPrizes * numMatches + numWilds;
@@ -116,5 +133,31 @@ class PrizeManager
         }
         
         return prizePool;
+    }
+    
+    static GenerateCarPool()
+    {
+        var carPool = [];
+        var selected = [];
+        while (selected.length < 8)
+        {
+            var index = Math.floor(Math.random() * PrizeManager.potentialCars.length);
+            if (!selected.includes(index))
+            {
+                carPool.push(PrizeManager.potentialCars[index]);
+                carPool.push(PrizeManager.potentialCars[index]);
+                selected.push(index);
+            }
+        }
+        
+        let currentIndex = carPool.length;
+        while (currentIndex != 0)
+        {
+            let randomIndex = Math.floor(Math.random() * currentIndex);
+            --currentIndex;
+            [carPool[currentIndex], carPool[randomIndex]] = [carPool[randomIndex], carPool[currentIndex]];
+        }
+        
+        return carPool;
     }
 };

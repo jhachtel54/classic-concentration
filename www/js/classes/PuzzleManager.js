@@ -78,7 +78,7 @@ class PuzzleManager
         {
             var ratedIndex = randomIndex - this.puzzles.length;
             this.selectedPuzzle = this.ratedPuzzles[ratedIndex];
-            return "img/Puzzles/Parent-" + String(randomIndex).padStart(3, '0') + ".png";
+            return "img/Puzzles/Parent-" + String(ratedIndex).padStart(3, '0') + ".png";
         }
     }
     

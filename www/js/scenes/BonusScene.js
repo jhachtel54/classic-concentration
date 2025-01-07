@@ -24,24 +24,28 @@ class BonusScene
         this.scene.innerHTML = "" +
             "<div class='uiArea'>" +
                 "<div class='container-fluid h-100 p-0'>" +
-                    "<div id='bonusAreaMain' class='row' style='background-color:#ff5555;'>" +
-                        "<div class='col-1' style='background-color:black'></div>" +
-                        "<div class='col-6'>" +
-                            "<div class='h-100 position-relative' style='background-color:#ff5555; padding: 1vh 1vw;'>" +
-                                "<div id='bonusArea' class='p-0 h-100 position-relative'>" +
-                                    // "<img id='rebusPuzzle' />" +
-                                "</div>" +
-                            "</div>" +
-                        "</div>" +
-                        "<div class='col-4' style='padding:1vh 1vw;'>" +
+                    "<div id='bonusAreaMain' class='row' style='background-color:black;'>" +
+                        "<div class='col-1' style='background-color:black;'></div>" +
+                        "<div class='col-10' style='background-color:#ff5555;'>" +
                             "<div class='container-fluid h-100 p-0'>" +
-                                "<div class='row h-50' style='padding:1vh 1vw;'>" +
-                                    "<img id='bonusImage' src='img/Bonus-Round.png' />" +
-                                "</div>" +
-                                "<div class='row h-50' style='padding:1vh 1vw;'>" +
-                                    "<div class='h-100 w-100' style='background-color:#55ff55; padding:1vh 0.5vw;'>" +
-                                        "<div id='countdown'>" +
-                                            "<span id='countdownText'>35</span>" +
+                                "<div class='row h-100'>" +
+                                    "<div class='col-7'>" +
+                                        "<div class='h-100 position-relative' style='padding: 1vh 0vw;'>" +
+                                            "<div id='bonusArea' class='p-0 h-100 position-relative'></div>" +
+                                        "</div>" +
+                                    "</div>" +
+                                    "<div class='col-5' style='padding:1vh 1vw;'>" +
+                                        "<div class='container-fluid h-100 p-0'>" +
+                                            "<div class='row h-50' style='padding:1vh 0vw;'>" +
+                                                "<img id='bonusImage' src='img/Bonus-Round.png' />" +
+                                            "</div>" +
+                                            "<div class='row h-50' style='padding:1vh 0vw;'>" +
+                                                "<div class='h-100 w-100' style='background-color:#55ff55; padding:1vh 0.5vw;'>" +
+                                                    "<div id='countdown'>" +
+                                                        "<span id='countdownText'>35</span>" +
+                                                    "</div>" +
+                                                "</div>" +
+                                            "</div>" +
                                         "</div>" +
                                     "</div>" +
                                 "</div>" +

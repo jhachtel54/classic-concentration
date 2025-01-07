@@ -110,12 +110,9 @@ class PuzzlePanel
     {
         if (isCar)
         {
-            var carDOM = document.createElement("img");
-            carDOM.src = "img/Car-Panel.png";
-            carDOM.classList.add("col", "puzzlePanel");
-            this.dom.parentElement.insertBefore(carDOM, this.dom);
-            this.dom.parentElement.removeChild(this.dom);
-            this.dom = carDOM;
+            this.dom.classList.add("puzzleBonusPanel");
+            this.unselectedDom.style.display = "none";
+            this.selectedDom.style.display = "none";
         }
         else
         {

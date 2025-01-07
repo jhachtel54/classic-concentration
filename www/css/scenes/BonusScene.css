@@ -126,3 +126,9 @@
     height: 10%;
     width: 100%;
 }
+
+.puzzleBonusPanel
+{
+    background-image: url("../../img/Car-Panel.png");
+    background-size: 100% 100%;
+}

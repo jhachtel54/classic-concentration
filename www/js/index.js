@@ -30,14 +30,20 @@ function onDeviceReady()
 {
     window.screen.orientation.lock("landscape");
     
-    if (window.localStorage.getItem("version") == null)
+    if (loadStringValue("version") == null)
     {
-        window.localStorage.setItem("version", "0.0");
+        window.localStorage.setItem("version", "0.1");
         window.localStorage.setItem("sfx", 1);
         window.localStorage.setItem("vibration", false);
         window.localStorage.setItem("aiLogic", 1);
         window.localStorage.setItem("aiMemory", 3);
         window.localStorage.setItem("parentalControls", true);
+        window.localStorage.setItem("bonusSeconds", 0);
+    }
+    else if (loadStringValue("version") == "0.0")
+    {
+        window.localStorage.setItem("version", "0.1");
+        window.localStorage.setItem("bonusMilliseconds", 0);
     }
     
     AudioPlayer.SetVolume(loadNumericalValue("sfx"));

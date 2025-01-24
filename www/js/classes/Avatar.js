@@ -49,7 +49,7 @@ class Avatar
     {
         this.gender = gender;
         this.number = number;
-        this.name = name.toLowerCase();
+        this.name = name.toUpperCase();
         
         this.idleAnimation = new Animation("Idle", [], [""]);
         this.lookAnimation = new Animation("Look", [400, 400], [1, 2]);

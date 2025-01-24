@@ -18,6 +18,9 @@ class AudioPlayer
         new AudioTrack("select", "audio/select.mp3"),
         new AudioTrack("transition", "audio/transition.mp3"),
         new AudioTrack("wrong", "audio/wrong.mp3"),
+        new AudioTrack("start", "audio/start.mp3"),
+        new AudioTrack("tick", "audio/tick.mp3"),
+        new AudioTrack("outro", "audio/outro.mp3"),
     ]
     
     static SetVolume(volume)

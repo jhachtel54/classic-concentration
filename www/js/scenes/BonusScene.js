@@ -1,6 +1,6 @@
 class BonusScene
 {
-    constructor()
+    constructor(player)
     {
         this.puzzlePanels = [];
         this.selectionsThisRound = [];
@@ -9,10 +9,12 @@ class BonusScene
         this.started = false;
         this.countdownElement = null;
         this.numMatches = 0;
+        this.player = player;
     }
     
     init(parentElement)
     {
+        this.countdown += loadNumericalValue("bonusMilliseconds");
         this.buildDOM(parentElement);
     }
     
@@ -77,6 +79,7 @@ class BonusScene
         // puzzleNode.src = PuzzleManager.SelectPuzzle();
         
         this.countdownElement = document.getElementById("countdownText");
+        this.countdownElement.innerHTML = this.countdown / 1000;
         
         var prizePool = PrizeManager.GenerateCarPool();
         var bonusArea = document.getElementById("bonusArea");
@@ -119,7 +122,6 @@ class BonusScene
         if (!this.canSelect || this.countdown < 0)
             return;
         
-        this.started = true;
         var id = evt.target.id;
         var number = id.split("-")[1];
         this.performSelect(number);
@@ -127,7 +129,16 @@ class BonusScene
 
     performSelect(id)
     {
-        AudioPlayer.Play("select");
+        if (this.started)
+        {
+            AudioPlayer.Play("select");
+        }
+        else
+        {
+            this.started = true;
+            AudioPlayer.Play("start");
+        }
+
         this.canSelect = false;
         
         if (this.selectionsThisRound.length > 0 && this.puzzlePanels[id].id == this.selectionsThisRound[this.selectionsThisRound.length - 1].id)
@@ -145,16 +156,19 @@ class BonusScene
             if (this.selectionsThisRound[0].prize.name == this.selectionsThisRound[1].prize.name)
             {
                 // It's a match!
-                setTimeout(function() {
-                    this.clearSelected();
-                }.bind(this), 1000);
+                if (this.incrementAndCheckWin() == false)
+                {
+                    setTimeout(function() {
+                        this.startNextRound();
+                    }.bind(this), 250);
+                }
             }
             else
             {
                 // Not a match
                 setTimeout(function() {
                     this.resetSelected();
-                }.bind(this), 1000);
+                }.bind(this), 250);
             }
         }
         else
@@ -163,28 +177,33 @@ class BonusScene
         }
     }
 
-    clearSelected()
+    incrementAndCheckWin()
     {
         ++this.numMatches;
+        if (this.numMatches < 7)
+            return false;
+
+        var winningPrize = this.selectionsThisRound[0].prize;
+        this.clearSelected();
+        this.canSelect = false;
+        this.started = false;
+        AudioPlayer.Play("correct");
+        window.localStorage.setItem("bonusMilliseconds", 0);
+    }
+
+    clearSelected()
+    {
         this.selectionsThisRound.forEach(panel => {
             panel.Clear(true);
             this.puzzlePanels[panel.id] = null;
         });
+    }
+
+    startNextRound()
+    {
+        this.clearSelected();
         this.selectionsThisRound = [];
-        
-        if (this.numMatches < 7)
-        {
-            this.canSelect = true;
-        }
-        else
-        {
-            this.canSelect = false;
-        }
-        
-        // this.playAreaText.innerHTML = this.playerNames[this.activePlayer] + " LOOK AT THESE PUZZLE PIECES";
-        // setTimeout(function() {
-            // this.changeActivePlayer(this.activePlayer);
-        // }.bind(this), 1667);
+        this.canSelect = true;
     }
 
     resetSelected()
@@ -221,9 +240,21 @@ class BonusScene
         if (this.started)
         {
             this.countdown -= deltaTime;
-            this.countdownElement.innerHTML = ("" + Math.ceil(this.countdown / 1000)).padStart(2, '0');
+            var seconds = ("" + Math.ceil(this.countdown / 1000)).padStart(2, '0');
+            if (seconds != this.countdownElement.innerHTML)
+            {
+                this.countdownElement.innerHTML = seconds;
+                AudioPlayer.Play("tick");
+            }
             if (this.countdown <= 0)
+            {
+                // We've lost
+                this.canSelect = false;
                 this.started = false;
+                AudioPlayer.Play("wrong");
+                var bonusMilliseconds = loadNumericalValue("bonusMilliseconds") + 5000;
+                window.localStorage.setItem("bonusMilliseconds", bonusMilliseconds);
+            }
         }
     }
 }

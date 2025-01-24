@@ -55,29 +55,15 @@ class BonusScene
                         "</div>" +
                         "<div class='col-1' style='background-color:black'></div>" +
                     "</div>" +
-                    // "<div id='playAreaText' class='row'><div class='col text-center'>CONTESTANTS GET READY TO PLAY</div></div>" +
-                    // "<div id='playAreaSolveRow' class='row'>" +
-                        // "<div class='col'></div>" +
-                        // "<div id='solveButtons' class='col-2 d-flex justify-content-between' style='visibility:hidden;'>" +
-                            // "<div id='solveButton'><div><span>SOLVE</span></div></div>" +
-                            // "<div id='yesSolveButton' style='display:none;'><div><span>YES</span></div></div>" +
-                            // "<div id='noSolveButton' style='display:none;'><div><span>NO</span></div></div>" +
-                        // "</div>" +
-                        // "<div class='col'></div>" +
-                    // "</div>" +
+                    "<div id='bonusAreaText' class='row'><div class='col text-center'></div></div>" +
                 "</div>" +
             "</div>";
             
         parentElement.appendChild(this.scene);
         
-        // this.playAreaText = document.getElementById("playAreaText").firstChild;
-        // this.solveButtons = document.getElementById("solveButtons");
-        // this.solveButton = document.getElementById("solveButton");
-        // this.solveButton.addEventListener("click", this.onSolveClicked.bind(this));
-        
-        // var puzzleNode = document.getElementById("rebusPuzzle");
-        // puzzleNode.src = PuzzleManager.SelectPuzzle();
-        
+        this.bonusAreaText = document.getElementById("bonusAreaText").firstChild;
+        this.bonusAreaText.innerHTML = this.player.name + "<br>TAP ANY PANEL TO BEGIN";
+
         this.countdownElement = document.getElementById("countdownText");
         this.countdownElement.innerHTML = this.countdown / 1000;
         
@@ -104,18 +90,6 @@ class BonusScene
     {
         return this.scene;
     }
-    
-    // startNextRound()
-    // {
-        // this.playAreaText.innerHTML = this.playerNames[this.activePlayer] + " SELECT ANY TWO PANELS OR SOLVE THE PUZZLE";
-        // this.enableSelecting();
-        
-        // if (this.activePlayer == 1 && this.ai)
-        // {
-            // if (!this.ai.WantsToSolvePuzzle())
-                // this.ai.QueueNextChoices(this.puzzlePanels);
-        // }
-    // }
 
     onPanelClicked(evt)
     {
@@ -136,6 +110,7 @@ class BonusScene
         else
         {
             this.started = true;
+            this.bonusAreaText.innerHTML = this.player.name;
             AudioPlayer.Play("start");
         }
 
@@ -152,7 +127,6 @@ class BonusScene
         
         if (this.selectionsThisRound.length == 2)
         {
-            // this.playAreaText.innerHTML = "";
             if (this.selectionsThisRound[0].prize.name == this.selectionsThisRound[1].prize.name)
             {
                 // It's a match!
@@ -184,11 +158,15 @@ class BonusScene
             return false;
 
         var winningPrize = this.selectionsThisRound[0].prize;
-        this.clearSelected();
         this.canSelect = false;
         this.started = false;
         AudioPlayer.Play("correct");
         window.localStorage.setItem("bonusMilliseconds", 0);
+        this.puzzlePanels.forEach(panel => {
+            if (panel != null)
+                panel.Clear(true);
+        });
+        this.ShowResult(winningPrize.name);
     }
 
     clearSelected()
@@ -216,23 +194,26 @@ class BonusScene
         this.canSelect = true;
     }
     
-    ShowAnswer()
+    ShowResult(prizeName)
     {
-        // this.stopUpdating = true;
+        var prizeString;
+        if (prizeName == null)
+        {
+            prizeString = this.player.name + " DID NOT WIN A CAR";
+        }
+        else
+        {
+            prizeString = this.player.name + " WON A BRAND NEW " + prizeName + "!";
+        }
+
+        prizeString += "<br>TAP ANYWHERE TO CONTINUE";
+        this.bonusAreaText.innerHTML = prizeString;
         
-        // this.solveButtons.style.visibility = "hidden";
-        // this.puzzlePanels.forEach(panel => {
-            // if (panel != null)
-                // panel.Clear();
-        // });
-        // if (this.activePlayer == 2)
-            // this.playAreaText.innerHTML = PuzzleManager.GetAnswer() + "<br>NO ONE SOLVED IT... TAP ANYWHERE TO CONTINUE</br>";
-        // else
-            // this.playAreaText.innerHTML = PuzzleManager.GetAnswer() + "<br>" + this.playerNames[this.activePlayer] + " SOLVED IT! TAP ANYWHERE TO CONTINUE";
-        
-        // this.playScene.addEventListener("click", function() {
-            // addScene(new TitleScene(false), true);
-        // });
+        setTimeout(function() {
+            this.scene.addEventListener("click", function() {
+                addScene(new TitleScene(false), true);
+            });
+        }.bind(this), 1);
     }
 
     Update(deltaTime)
@@ -254,6 +235,7 @@ class BonusScene
                 AudioPlayer.Play("wrong");
                 var bonusMilliseconds = loadNumericalValue("bonusMilliseconds") + 5000;
                 window.localStorage.setItem("bonusMilliseconds", bonusMilliseconds);
+                this.ShowResult(null);
             }
         }
     }

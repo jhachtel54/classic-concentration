@@ -114,17 +114,11 @@
 
 #bonusAreaText
 {
-    height: 10%;
+    height: 20%;
     color: #ffff55;
     width: 100%;
     font-size: 2rem;
     font-weight: bold;
-}
-
-#bonusAreaSolveRow
-{
-    height: 10%;
-    width: 100%;
 }
 
 .puzzleBonusPanel

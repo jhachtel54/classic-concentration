@@ -22,7 +22,9 @@ class AudioPlayer
     
     static SetVolume(volume)
     {
-        this.tracks.forEach(track => { track.audio.volume = volume; });
+        // The volume is way too loud at 100%, so half it
+        var halfVolume = volume * 0.5;
+        this.tracks.forEach(track => { track.audio.volume = halfVolume; });
     }
     
     static Play(name)

@@ -36,39 +36,39 @@ class StageScene
                 "<g id='player1Sprite'></g>" +
             "</svg>" +
             "<div id='stageAreaUI' class='uiArea'>" +
-                "<div id='characterSelectDialog' class='position-absolute'>" +
-                    "<div class='position-absolute'>" +
-                        "<div class='position-absolute container-fluid'>" +
-                            "<div class='row h-15'>" +
-                                "<div class='col-2'></div>" +
-                                "<div id='characterSelectTitle' class='col text-center m-auto'>PLAYER 1</div>" +
-                                "<div class='col-2'></div>" +
-                            "</div>" +
-                            "<div class='row h-15'>" +
-                                "<div class='col-1'></div>" +
-                                "<div class='col-4 m-auto'>NAME</div>" +
-                                "<input id='playerNameTextBox' type='text' class='col h-80' />" +
-                                "<div class='col-1'></div>" +
-                            "</div>" +
-                            "<div class='row h-45'>" +
-                                "<div id='prevAvatarButton' class='col-2 text-end m-auto' style='font-size:6rem;'><</div>" +
-                                "<div class='col h-100'>" +
-                                    "<svg id='characterSelectAvatar' viewBox='0 0 160 228' class='w-100 h-100'>" +
-                                        "<use width='160' height='228' href='#male1Idle' />" +
-                                    "</svg>" +
-                                "</div>" +
-                                "<div id='nextAvatarButton' class='col-2 text-begin m-auto' style='font-size:6rem;'>></div>" +
-                            "</div>" +
-                            "<div class='row h-20'>" +
-                                "<div class='col d-flex flex-column align-content-around text-center m-0' style='font-size:1.75rem;'>" +
-                                    "<div id='characterSelectButton1' class='m-auto characterSelectButton'>ADD PLAYER 2</div>" +
-                                    "<div id='characterSelectButton2' class='m-auto characterSelectButton'>ADD AI PLAYER</div>" +
-                                "</div>" +
-                            "</div>" +
-                            "<div class='row h-5'></div>" +
-                        "</div>" +
-                    "</div>" +
-                "</div>" +
+                // "<div id='characterSelectDialog' class='position-absolute'>" +
+                //     "<div class='position-absolute'>" +
+                //         "<div class='position-absolute container-fluid'>" +
+                //             "<div class='row h-15'>" +
+                //                 "<div class='col-2'></div>" +
+                //                 "<div id='characterSelectTitle' class='col text-center m-auto'>PLAYER 1</div>" +
+                //                 "<div class='col-2'></div>" +
+                //             "</div>" +
+                //             "<div class='row h-15'>" +
+                //                 "<div class='col-1'></div>" +
+                //                 "<div class='col-4 m-auto'>NAME</div>" +
+                //                 "<input id='playerNameTextBox' type='text' class='col h-80' />" +
+                //                 "<div class='col-1'></div>" +
+                //             "</div>" +
+                //             "<div class='row h-45'>" +
+                //                 "<div id='prevAvatarButton' class='col-2 text-end m-auto' style='font-size:6rem;'><</div>" +
+                //                 "<div class='col h-100'>" +
+                //                     "<svg id='characterSelectAvatar' viewBox='0 0 160 228' class='w-100 h-100'>" +
+                //                         "<use width='160' height='228' href='#male1Idle' />" +
+                //                     "</svg>" +
+                //                 "</div>" +
+                //                 "<div id='nextAvatarButton' class='col-2 text-begin m-auto' style='font-size:6rem;'>></div>" +
+                //             "</div>" +
+                //             "<div class='row h-20'>" +
+                //                 "<div class='col d-flex flex-column align-content-around text-center m-0' style='font-size:1.75rem;'>" +
+                //                     "<div id='characterSelectButton1' class='m-auto characterSelectButton'>ADD PLAYER 2</div>" +
+                //                     "<div id='characterSelectButton2' class='m-auto characterSelectButton'>ADD AI PLAYER</div>" +
+                //                 "</div>" +
+                //             "</div>" +
+                //             "<div class='row h-5'></div>" +
+                //         "</div>" +
+                //     "</div>" +
+                // "</div>" +
                 "<div id='resultText' class='text-center'></div>" +
             "</div>" +
         "";
@@ -92,14 +92,16 @@ class StageScene
                 "<text><textPath class='scoreboardPrizeText' id='player1Prize" + index + "Text' href='#player1Prize" + index + "TextPath' text-anchor='middle' startOffset='50%'></textPath></text>";
         }
         
-        var prevAvatarButton = document.getElementById("prevAvatarButton");
-        prevAvatarButton.addEventListener("click", this.selectPrevAvatar.bind(this));
-        var nextAvatarButton = document.getElementById("nextAvatarButton");
-        nextAvatarButton.addEventListener("click", this.selectNextAvatar.bind(this));
-        var characterSelectButton1 = document.getElementById("characterSelectButton1");
-        characterSelectButton1.addEventListener("click", this.onClickedDialogButton.bind(this));
-        var characterSelectButton1 = document.getElementById("characterSelectButton2");
-        characterSelectButton2.addEventListener("click", this.onClickedDialogButton.bind(this));
+        var dialog = new CharacterSelectDialog();
+        document.getElementById("stageAreaUI").appendChild(dialog.GetDOM());
+        // var prevAvatarButton = document.getElementById("prevAvatarButton");
+        // prevAvatarButton.addEventListener("click", this.selectPrevAvatar.bind(this));
+        // var nextAvatarButton = document.getElementById("nextAvatarButton");
+        // nextAvatarButton.addEventListener("click", this.selectNextAvatar.bind(this));
+        // var characterSelectButton1 = document.getElementById("characterSelectButton1");
+        // characterSelectButton1.addEventListener("click", this.onClickedDialogButton.bind(this));
+        // var characterSelectButton1 = document.getElementById("characterSelectButton2");
+        // characterSelectButton2.addEventListener("click", this.onClickedDialogButton.bind(this));
         
         // DEBUG!!!
         //this.setPlayerName("JAMES", 0);

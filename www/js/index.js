@@ -49,7 +49,13 @@ function onDeviceReady()
     AudioPlayer.SetVolume(loadNumericalValue("sfx"));
     sceneContainer = document.getElementById("sceneContainer");
     addScene(new TitleScene(true), true);
-    // addScene(new StageScene(), true);
+    // addScene(new BonusScene({
+    //     name: "JAMES",
+    //     gender: "male",
+    //     number: 1,
+    //     currentScore: 0,
+    //     allTime: 0
+    // }), true);
     
     window.requestAnimationFrame((timestamp) => update(timestamp));
     

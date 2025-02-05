@@ -1,0 +1,177 @@
+#optionsBanner
+{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.optionsListItem, .optionsListItemDisabled
+{
+    margin-bottom: 1%!important;
+    font-weight: bold;
+    font-size: 2rem;
+    line-height: 2rem;
+    height: 13%;
+}
+
+#optionsListButtons
+{
+    height: 15%;
+    color: #55ffff;
+    font-weight: bold;
+    font-size: 2rem;
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+    left: 0px;
+}
+
+#optionsListButtons .col
+{
+    background-color: #ff55ff;
+    text-align: center;
+    margin: 0rem 6rem;
+    padding: 1rem!important;
+}
+
+#optionsListButtons .col div
+{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    border: 0.5rem solid #55ffff;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.optionsListItem
+{
+    color: #55ffff;
+}
+
+.optionsListItemDisabled
+{
+    color: #555555;
+}
+
+.optionsListItemRadioItem
+{
+    min-width: 20%;
+}
+
+.optionsListItemRadio .optionsListItemRadioItem
+{
+    background-color: black;
+    color: #55ffff;
+}
+
+.optionsListItemRadio .optionsListItemRadioItemSelected
+{
+    color: black;
+    background-color: #55ffff;
+}
+
+.optionsListItemRadioDisabled .optionsListItemRadioItem
+{
+    background-color: black;
+    color: #555555;
+}
+
+.optionsListItemRadioDisabled .optionsListItemRadioItemSelected
+{
+    color: black;
+    background-color: #555555;
+}
+
+/*****************************************************************************/
+/* Slider thumbs for all the browsers. They have to be separate rules too... */
+/*****************************************************************************/
+.optionsListItemRange::-webkit-slider-thumb
+{
+    -webkit-appearance: none;
+    border: none;
+    height: 3rem;
+    width: 3rem;
+    background: #55ffff;
+    margin-top: 0px;
+}
+.optionsListItemRange:disabled::-webkit-slider-thumb
+{
+    background: #555555;
+}
+
+.optionsListItemRange::-moz-range-thumb
+{
+    border: none;
+    height: 3rem;
+    width: 3rem;
+    background: #55ffff;
+    margin-top: 0px;
+}
+.optionsListItemRange:disabled::-moz-range-thumb
+{
+    background: #555555;
+}
+
+.optionsListItemRange::-ms-thumb
+{
+    border: none;
+    height: 3rem;
+    width: 3rem;
+    background: #55ffff;
+    margin-top: 0px;
+}
+.optionsListItemRange:disabled::-ms-thumb
+{
+    background: #555555;
+}
+/*****************************************************************************/
+
+/*****************************************************************************/
+/* Slider tracks for all the browsers. They have to be separate rules too... */
+/*****************************************************************************/
+.optionsListItemRange::-webkit-slider-runnable-track
+{
+    width: 100%;
+    height: 3rem;
+    background: #ff55ff;
+    border: none;
+}
+.optionsListItemRange:disabled::-webkit-slider-runnable-track
+{
+    background: #2a2a2a;
+}
+
+.optionsListItemRange::-moz-range-track
+{
+    width: 100%;
+    height: 3rem;
+    background: #ff55ff;
+    border: none;
+}
+.optionsListItemRange:disabled::-moz-range-track
+{
+    background: #2a2a2a;
+}
+
+.optionsListItemRange::-ms-track
+{
+    width: 100%;
+    height: 3rem;
+    background: transparent;
+    color: transparent;
+    border: none;
+}
+.optionsListItemRange::-ms-fill-lower {
+    background: #ff55ff;
+    border: none;
+}
+.optionsListItemRange:disabled::-ms-fill-lower {
+    background: #2a2a2a;
+}
+.optionsListItemRange::-ms-fill-upper {
+    background: #2a2a2a;
+    border: none;
+}
+/*****************************************************************************/

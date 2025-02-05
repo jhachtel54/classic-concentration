@@ -1,0 +1,11 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "Classic Concentration",
+  "short_name": "Classic Concentration",
+  "version": "com.jameshachtel.concentration",
+  "description": "Classic Concentration for mobile",
+  "author": "James Hachtel",
+  "icons": [],
+  "start_url": "index.html"
+}

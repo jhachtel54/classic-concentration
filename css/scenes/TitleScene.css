@@ -1,0 +1,66 @@
+#bannerContainer
+{
+    height: 56%;
+    width: 100%;
+}
+
+#titleBanner
+{
+    background: url("../../img/Title-Splash.png") no-repeat center center;
+    background-size: 100% 100%;
+}
+
+.titleText
+{
+    color: #ffff55;
+    font-weight: bold;
+    font-size: 2.5rem;
+    position: absolute;
+    width: 100%;
+    bottom: 5%;
+    left: 0px;
+}
+
+#titleButtons
+{
+    height: 15%;
+    color: #ffff55;
+    font-weight: bold;
+    font-size: 2rem;
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+    left: 0px;
+}
+
+#titleButtons .col
+{
+    background-color: #ff5555;
+    text-align: center;
+    margin: 0rem 6rem;
+    padding: 1rem!important;
+}
+
+#titleButtons .col div
+{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    border: 0.5rem solid #ffff55;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#scoreButton
+{
+    background-color: #2a2a2a!important;
+    color: #555555;
+}
+
+#scoreButton>div
+{
+    background-color: #2a2a2a;
+    color: #555555;
+    border: 0.5rem solid #555555!important;
+}
